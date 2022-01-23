@@ -4,27 +4,35 @@ import {
   StyleSheet,
   View,
   Image,
+  ScrollView,
   TouchableOpacity,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+// import DatePicker from 'react-native-date-picker';
 import {
   Container,
   Header,
   Body,
   Right,
+  Left,
   Icon,
+  DatePicker,
   Content,
   Picker,
-  DatePicker,
 } from 'native-base';
 import axios from 'axios';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Spinner from 'react-native-spinkit';
+import NetInfo from '@react-native-community/netinfo';
+import base_url from '../base_url';
+
 const Item = Picker.Item;
 const timeIcon = <MaterialIcons name="schedule" size={25} color="#000" />;
 const locationIcon = <MaterialIcons name="place" size={25} color="#000" />;
 const searchIcon = <MaterialIcons name="search" size={20} color="#fff" />;
+const image = {uri: '../../assets/bg-img.png'};
 
 export default class Profile extends Component {
   _isMounted = false;
@@ -36,46 +44,95 @@ export default class Profile extends Component {
       pointData: [],
       fleetsAllData: [],
       searchdataInfo: [],
-
       startPointVal: '',
       endPointVal: '',
       fleetsData: '',
+      loading: true,
       chosenDate: new Date(),
       userDa: '',
       logo: '',
       settings: '',
-
+      base_url: base_url,
       size: 90,
-      color: '#324191',
+      color: '#880C0C',
     };
     this.setDate = this.setDate.bind(this);
   }
 
+  _checkNetwork = () => {
+    //check network and fetch web settings
+    NetInfo.fetch()
+      .then(state => {
+        if (state.isConnected) {
+          console.log('Mtandao ni ' + state.isConnected);
+          this._callwebSettings();
+
+          //get locations and fleet
+          this._pointAllData();
+          // this.getfleetType();
+        } else {
+          Alert.alert(
+            this.state.title,
+            'Please Check Your Data Connection',
+            [
+              {},
+              {},
+              {
+                text: 'OK',
+                onPress: () =>
+                  setTimeout(() => {
+                    this._checkNetwork();
+                  }, 5000),
+              },
+            ],
+            {cancelable: false},
+          );
+        }
+      })
+      .catch(err => console.log('Somethings happened '.err));
+  };
+
   componentDidMount = () => {
     this._isMounted = true;
+
+    this._checkNetwork();
+
     setInterval(() => {
-      AsyncStorage.getItem('state_data', (error, res) => {
-        let d = JSON.parse(res);
-
-        AsyncStorage.getItem('user_data', (error, resData) => {
-          let p = JSON.parse(resData);
-
-          this._pointAllData();
-          this.getfleetType();
-
-          this.setState({
-            userDa: p,
-            logo: d.logo,
-            settings: d.settings,
-          });
-        });
-      });
+      // AsyncStorage.getItem('state_data', (error, res) => {
+      //   let d = JSON.parse(res);
+      //   AsyncStorage.getItem('user_data', (error, resData) => {
+      //     let p = JSON.parse(resData);
+      //     // this._pointAllData();
+      //     // this.getfleetType();
+      //     this.setState({
+      //       // userDa: p,
+      //       // logo: d.logo,
+      //       // settings: d.settings,
+      //     });
+      //   });
+      // });
     }, 2000);
   };
 
   componentWillUnmount() {
     this._isMounted = false;
   }
+
+  _callwebSettings = () => {
+    axios
+      .get(`${this.state.base_url}Api/webSetting`)
+      .then(res => {
+        // console.log('Settings: ' + JSON.stringify(res.data.response));
+        this.setState({
+          logo: res.data.response.logo_url,
+          settings: res.data.response,
+          loading: false,
+        });
+
+        AsyncStorage.setItem('state_data', JSON.stringify(this.state));
+      })
+      .catch(error => console.log('from web settings ' + error.response));
+  };
 
   _pointAllData = () => {
     setTimeout(() => {
@@ -94,7 +151,7 @@ export default class Profile extends Component {
             });
           }
         })
-        .catch(err => console.log(err.response));
+        .catch(err => console.log('fetch locations: ' + err.gete));
     }, 3000);
   };
 
@@ -102,7 +159,6 @@ export default class Profile extends Component {
     if (
       this.state.startPointVal == '' ||
       this.state.endPointVal == '' ||
-      this.state.fleetsData == '' ||
       this.state.chosenDate == ''
     ) {
       Alert.alert(
@@ -119,30 +175,30 @@ export default class Profile extends Component {
       this.setState({
         startPointVal: '',
         endPointVal: '',
-        fleetsData: '',
         chosenDate: new Date(),
       });
     }
   };
 
-  getfleetType = () => {
-    axios
-      .get(`${this.state.settings.base_url}Api/fleet_list`)
-      .then(res => {
-        if (res.data.response.fleets == undefined) {
-          this.setState({
-            ...this.state,
-            fleetsAllData: [],
-          });
-        } else {
-          this.setState({
-            ...this.state,
-            fleetsAllData: res.data.response.fleets,
-          });
-        }
-      })
-      .catch(err => console.log(err.response));
-  };
+  // i dont need car types
+  // getfleetType = () => {
+  //   axios
+  //     .get(`${this.state.settings.base_url}Api/fleet_list`)
+  //     .then(res => {
+  //       if (res.data.response.fleets == undefined) {
+  //         this.setState({
+  //           ...this.state,
+  //           fleetsAllData: [],
+  //         });
+  //       } else {
+  //         this.setState({
+  //           ...this.state,
+  //           fleetsAllData: res.data.response.fleets,
+  //         });
+  //       }
+  //     })
+  //     .catch(err => console.log('get fleet type: ' + err.response));
+  // };
 
   _getfleetsData = () => {
     return this.state.fleetsAllData.map((data, i) => {
@@ -190,229 +246,295 @@ export default class Profile extends Component {
     this.setState({chosenDate: selectDate});
   }
 
-  logOutUser = () => {
-    Alert.alert(
-      'LOGOUT',
-      'Are You Sure?',
-      [
-        {},
-        {text: 'NO', onPress: () => console.log('OK Pressed')},
-        {
-          text: 'CONFIRM',
-          onPress: () => {
-            AsyncStorage.removeItem('intro_tokenr');
-            this.props.navigation.navigate('login');
-          },
-        },
-      ],
-      {cancelable: false},
-    );
-  };
+  // logOutUser = () => {
+  //   Alert.alert(
+  //     'LOGOUT',
+  //     'Are You Sure?',
+  //     [
+  //       {},
+  //       {text: 'NO', onPress: () => console.log('OK Pressed')},
+  //       {
+  //         text: 'CONFIRM',
+  //         onPress: () => {
+  //           AsyncStorage.removeItem('intro_tokenr');
+  //           this.props.navigation.navigate('login');
+  //         },
+  //       },
+  //     ],
+  //     {cancelable: false},
+  //   );
+  // };
 
   _getProDataAll = () => {
-    if (
-      this.state.settings == '' ||
-      this.state.userDa == '' ||
-      this.state.pointData.length == 0
-    ) {
-      return (
-        <View style={{marginTop: 270, alignItems: 'center'}}>
-          <Spinner
-            style={styles.spinner}
-            size={this.state.size}
-            type={'Pulse'}
-            color={this.state.color}
-          />
-        </View>
-      );
+    if (this.state.loading == true) {
+      <View style={{marginTop: 270, alignItems: 'center'}}>
+        <Spinner
+          style={styles.spinner}
+          size={this.state.size}
+          type={'Pulse'}
+          color={this.state.color}
+        />
+      </View>;
     } else {
-      return (
-        <View style={{flex: 1}}>
-          <View style={{flex: 9}}>
-            <Container>
-              <Header style={styles.loginHeader}>
-                <Body>
-                  <View style={styles.logoD}>
-                    <Image
-                      style={{width: 140, height: 30, resizeMode: 'contain'}}
-                      source={{uri: this.state.logo}}
-                    />
-                  </View>
-                </Body>
-
-                <Right style={{marginRight: 15}}>
-                  <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity
-                      onPress={() => this.props.navigation.openDrawer()}>
-                      <Icon
-                        style={{fontSize: 22}}
-                        type="FontAwesome"
-                        name="bars"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </Right>
-              </Header>
-
-              <Content style={{backgroundColor: '#F9F9F9'}}>
-                <View style={[styles.searchtour]}>
-                  <Text style={[styles.searchtourtext]}>
-                    {this.state.settings.search_tour.toUpperCase()}
-                  </Text>
-                </View>
-
-                <View style={{flex: 1}}>
-                  <View
-                    style={{
-                      width: '96%',
-                      marginLeft: '2%',
-                      marginVertical: 15,
-                    }}>
-                    <View style={styles.locksearchDet}>
+      if (this.state.pointData.length == 0) {
+        return (
+          <View style={{marginTop: 270, alignItems: 'center'}}>
+            <Spinner
+              style={styles.spinner}
+              size={this.state.size}
+              type={'Pulse'}
+              color={this.state.color}
+            />
+          </View>
+        );
+      } else {
+        return (
+          <View style={{flex: 1}}>
+            <ImageBackground
+              source={require('../../assets/bg-img.png')}
+              style={styles.image}>
+              <ScrollView>
+                <Container>
+                  <Header style={styles.loginHeader}>
+                    <Left style={(styles.marginLeft = 2)}>
                       <View style={{flexDirection: 'row'}}>
-                        {locationIcon}
-                        <Text style={styles.locationDet}>
-                          {this.state.settings.location_details}
-                        </Text>
+                        <TouchableOpacity
+                          onPress={() => this.props.navigation.openDrawer()}>
+                          <Icon
+                            style={{fontSize: 22}}
+                            type="FontAwesome"
+                            name="bars"
+                          />
+                        </TouchableOpacity>
                       </View>
+                    </Left>
 
-                      <View style={{flexDirection: 'row', marginTop: 15}}>
-                        <View style={{flex: 4}}>
-                          <Text style={styles.startpoint}>
-                            {this.state.settings.start_point}
-                          </Text>
-                          <Picker
-                            mode="dropdown"
-                            selectedValue={this.state.startPointVal}
-                            onValueChange={this.onstartValueChange.bind(this)}>
-                            <Item
-                              key="k"
-                              label={this.state.settings.select_start_point}
-                              value=""
-                            />
-                            {this._getStatData()}
-                          </Picker>
-                        </View>
-
-                        <View
+                    <Body>
+                      <View style={styles.logoD}>
+                        <Image
                           style={{
-                            flex: 2,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}>
-                          <Image
-                            style={styles.payimg}
-                            source={require('../../assets/arrow.png')}
-                          />
-                        </View>
-
-                        <View style={{flex: 4}}>
-                          <Text style={styles.startpoint}>
-                            {this.state.settings.end_point}
-                          </Text>
-                          <Picker
-                            mode="dropdown"
-                            selectedValue={this.state.endPointVal}
-                            onValueChange={this.onendValueChange.bind(this)}>
-                            <Item
-                              key="k"
-                              label={this.state.settings.select_end_point}
-                              value=""
-                            />
-                            {this._getStatData()}
-                          </Picker>
-                        </View>
+                            width: 138,
+                            height: 90,
+                            resizeMode: 'center',
+                          }}
+                          source={{uri: this.state.logo}}
+                        />
                       </View>
+                    </Body>
+
+                    <Right style={(styles.marginLeft = 2)}>
+                      <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity
+                          onPress={() => this.props.navigation.openDrawer()}>
+                          <Icon
+                            style={{fontSize: 22}}
+                            type="FontAwesome"
+                            name="mobile-phone"
+                          />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          onPress={() => this.props.navigation.openDrawer()}>
+                          <Icon
+                            style={{fontSize: 22, marginLeft: 7}}
+                            type="FontAwesome"
+                            name="envelope"
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </Right>
+                  </Header>
+
+                  <Content>
+                    <View style={[styles.searchtour]}>
+                      <Text style={[styles.searchtourtext]}>
+                        {'Chagua Safari'}
+                      </Text>
                     </View>
 
-                    <View style={styles.locksearchDet}>
-                      <View style={{flexDirection: 'row', marginBottom: 8}}>
-                        {timeIcon}
-                        <Text style={styles.locationDet}>
-                          {this.state.settings.journey_date}
-                        </Text>
-                      </View>
-
-                      <View style={{flexDirection: 'row'}}>
-                        <View style={{flex: 8}}>
-                          <DatePicker
-                            defaultDate={new Date()}
-                            minimumDate={new Date(2018, 1, 1)}
-                            maximumDate={new Date(2040, 12, 31)}
-                            locale={'en'}
-                            timeZoneOffsetInMinutes={undefined}
-                            modalTransparent={false}
-                            animationType={'slide'}
-                            androidMode={'default'}
-                            placeHolderText={
-                              this.state.settings.select_journey_date
-                            }
-                            textStyle={{color: '#000'}}
-                            placeHolderTextStyle={{color: '#000'}}
-                            onDateChange={this.setDate}
-                          />
-                        </View>
-                        <View style={{flex: 1}}>
-                          <Image
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <View
+                        style={{
+                          width: '80%',
+                          marginLeft: '2%',
+                          marginVertical: 15,
+                        }}>
+                        <View style={styles.locksearchDet}>
+                          <View
                             style={{
-                              width: 25,
-                              height: 25,
-                              resizeMode: 'contain',
-                              marginTop: 8,
-                            }}
-                            source={require('../../assets/cal.png')}
-                          />
+                              flexDirection: 'column',
+                              marginTop: 5,
+                              marginBottom: 7,
+                            }}>
+                            <View style={{flex: 4, marginBottom: 5}}>
+                              <Text style={styles.startpoint}>
+                                {this.state.settings.start_point}
+                              </Text>
+                              <View style={styles._Rectangle_10}>
+                                <Picker
+                                  mode="dropdown"
+                                  selectedValue={this.state.startPointVal}
+                                  onValueChange={this.onstartValueChange.bind(
+                                    this,
+                                  )}>
+                                  <Item
+                                    key="k"
+                                    label={
+                                      this.state.settings.select_start_point
+                                    }
+                                    value=""
+                                    style={{fontSize: 14}}
+                                  />
+                                  {this._getStatData()}
+                                </Picker>
+                              </View>
+                            </View>
+
+                            {/* <View
+                              style={{
+                                flex: 2,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                              }}>
+                              <Image
+                                style={styles.payimg}
+                                source={require('../../assets/arrow.png')}
+                              />
+                            </View> */}
+
+                            <View style={{flex: 4, marginBottom: 5}}>
+                              <Text style={styles.startpoint}>
+                                {this.state.settings.end_point}
+                              </Text>
+                              <View style={styles._Rectangle_10}>
+                                <Picker
+                                  mode="dropdown"
+                                  selectedValue={this.state.endPointVal}
+                                  onValueChange={this.onendValueChange.bind(
+                                    this,
+                                  )}>
+                                  <Item
+                                    key="k"
+                                    label={this.state.settings.select_end_point}
+                                    value=""
+                                    style={{fontSize: 14}}
+                                  />
+                                  {this._getStatData()}
+                                </Picker>
+                              </View>
+                            </View>
+                          </View>
+
+                          <View style={{flexDirection: 'row', marginBottom: 5}}>
+                            <Text style={styles.locationDet}>
+                              {this.state.settings.journey_date}
+                            </Text>
+                          </View>
+
+                          <View style={styles._Rectangle_10}>
+                            <View style={{flexDirection: 'row'}}>
+                              <View style={{flex: 8}}>
+                                <DatePicker
+                                  defaultDate={new Date()}
+                                  minimumDate={new Date(Date.now())}
+                                  maximumDate={new Date(2040, 12, 31)}
+                                  locale={'en'}
+                                  timeZoneOffsetInMinutes={undefined}
+                                  modalTransparent={false}
+                                  animationType={'slide'}
+                                  androidMode={'default'}
+                                  placeHolderText={
+                                    this.state.settings.select_journey_date
+                                  }
+                                  textStyle={{color: '#000'}}
+                                  placeHolderTextStyle={{
+                                    color: '#000',
+                                    fontSize: 14,
+                                  }}
+                                  onDateChange={this.setDate}
+                                />
+                              </View>
+                              <View style={{flex: 1, marginEnd: 7}}>
+                                <Image
+                                  style={{
+                                    width: 25,
+                                    height: 25,
+                                    resizeMode: 'contain',
+                                    marginTop: 8,
+                                  }}
+                                  source={require('../../assets/cal.png')}
+                                />
+                              </View>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
+                  </Content>
+                </Container>
+              </ScrollView>
 
-                    <View style={styles.locksearchDet}>
-                      <View style={{flexDirection: 'row', marginBottom: 8}}>
-                        {/* {timeIcon} */}
-                        <Text style={styles.locationDet}>
-                          {this.state.settings.fleet_type}
-                        </Text>
-                      </View>
-
-                      <View style={{flexDirection: 'row'}}>
-                        <Picker
-                          mode="dropdown"
-                          selectedValue={this.state.fleetsData}
-                          onValueChange={this.onfleetsValueChange.bind(this)}>
-                          <Item
-                            key="k"
-                            label={this.state.settings.select_fleet_type}
-                            value=""
-                          />
-                          {this._getfleetsData()}
-                        </Picker>
-                      </View>
-                    </View>
-                  </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View style={styles._tafuta_basi}>
+                  <TouchableOpacity
+                    style={[styles.searchtour, {flexDirection: 'row'}]}
+                    onPress={() => this._searchJourneyTour()}>
+                    {searchIcon}
+                    <Text style={[styles.searchtourtext, {marginLeft: 8}]}>
+                      {this.state.settings.search}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
-              </Content>
-            </Container>
+              </View>
+              {/* <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'flex-end',
+                  backgroundColor: '#F9F9F9AF',
+                }}>
+                <View style={{justifyContent: 'flex-end'}}>
+                  <TouchableOpacity
+                    style={[styles.searchtour, {flexDirection: 'row'}]}
+                    onPress={() => this._searchJourneyTour()}>
+                    {searchIcon}
+                    <Text style={[styles.searchtourtext, {marginLeft: 8}]}>
+                      {this.state.settings.search}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View> */}
+            </ImageBackground>
           </View>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'flex-end',
-              backgroundColor: '#F9F9F9',
-            }}>
-            <View style={{justifyContent: 'flex-end'}}>
-              <TouchableOpacity
-                style={[styles.searchtour, {flexDirection: 'row'}]}
-                onPress={() => this._searchJourneyTour()}>
-                {searchIcon}
-                <Text style={[styles.searchtourtext, {marginLeft: 8}]}>
-                  {this.state.settings.search}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      );
+        );
+      }
     }
+    // if (
+    //   this.state.settings == '' ||
+    //   this.state.userDa == '' ||
+    //   this.state.pointData.length == 0
+    // ) {
+    //   return (
+    //     <View style={{marginTop: 270, alignItems: 'center'}}>
+    //       <Spinner
+    //         style={styles.spinner}
+    //         size={this.state.size}
+    //         type={'Pulse'}
+    //         color={this.state.color}
+    //       />
+    //     </View>
+    //   );
+    // } else {
+    // return deleted
+    // }
   };
 
   render() {
@@ -421,15 +543,79 @@ export default class Profile extends Component {
 }
 
 const styles = StyleSheet.create({
+  _Chagua_Safari: {
+    width: 365,
+    fontFamily: 'Manrope-Bold',
+    color: 'rgba(0, 0, 0, 1)',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    letterSpacing: 0.1,
+  },
+  _search_bus_bg: {
+    width: '100%',
+    height: 300,
+    marginLeft: '2%',
+    paddingBottom: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    opacity: 1,
+    top: 10,
+    bottom: 'auto',
+    transform: [{translateX: 0}, {translateY: 0}, {rotate: '0deg'}],
+    shadowColor: 'rgb(0, 0, 0)',
+  },
+  _kutoka: {
+    width: '80%',
+    height: 50,
+    overflow: 'hidden',
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+  _Rectangle_10: {
+    borderWidth: 1,
+    opacity: 1,
+    borderColor: '#e3e7e9',
+    shadowColor: 'rgb(0, 0, 0)',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+
+    shadowOpacity: 0.25,
+    elevation: 1,
+    shadowRadius: 10,
+    borderRadius: 5,
+
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+  },
+
+  _tafuta_basi: {
+    width: 175,
+    borderRadius: 30,
+    opacity: 1,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 35,
+    shadowColor: 'rgb(0, 0, 0)',
+    shadowOpacity: 0.5099999904632568,
+    shadowRadius: 10,
+  },
+
   loginHeader: {
     backgroundColor: '#ffffff',
     borderBottomColor: '#333',
     borderBottomWidth: 2,
+    elevation: 1,
+    shadowOpacity: 2,
+  },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
   },
   logoD: {
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'baseline',
   },
   logoImage: {
     resizeMode: 'contain',
@@ -438,35 +624,48 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   searchtourtext: {
-    color: '#ffffff',
+    color: '#000',
     fontSize: 16,
     fontFamily: 'Montserrat-SemiBold',
     justifyContent: 'center',
     alignItems: 'center',
   },
   searchtour: {
-    backgroundColor: '#003B93',
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
   },
   locksearchDet: {
-    backgroundColor: '#ffffff',
-    borderWidth: 3,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    opacity: 1,
     borderColor: '#e3e7e9',
-    borderRadius: 5,
+    shadowColor: 'rgb(0, 0, 0)',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.25,
+    elevation: 1,
+    shadowRadius: 10,
+    paddingBottom: 50,
+    borderRadius: 7,
     paddingVertical: 15,
     paddingHorizontal: 15,
     marginBottom: 15,
   },
+
   locationDet: {
-    fontSize: 15,
-    fontFamily: 'Montserrat-SemiBold',
-    marginLeft: 15,
+    fontSize: 14,
+    fontFamily: 'Monrope-Bold',
+    color: 'rgba(159, 159, 159, 1)',
+    alignItems: 'center',
+    marginLeft: 5,
   },
   startpoint: {
     fontSize: 14,
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Monrope-Bold',
+    color: 'rgba(159, 159, 159, 1)',
     alignItems: 'center',
     marginLeft: 5,
   },

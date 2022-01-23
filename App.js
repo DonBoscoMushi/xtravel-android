@@ -29,6 +29,11 @@ import SideDrawerPage from './component/screen/Profile/SideDrawerPage';
 import BookingList from './component/screen/BookingList/BookingList';
 import ViewBooking from './component/screen/BookingList/ViewBooking';
 
+import {StyleSheet, Text, View,Button} from 'react-native';  
+// import { createBottomTabNavigator, createAppContainer} from 'react-navigation';  
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';  
+import Icon from 'react-native-vector-icons/Ionicons';  
+
 const AppStackNavigator = createStackNavigator(
   {
     profile: {
@@ -44,7 +49,7 @@ const AppStackNavigator = createStackNavigator(
       screen: PassengerDetails,
     },
     pickUp: {
-      screen: PickUp,
+      screen: PickUp, 
     },
     pay: {
       screen: Payment,
@@ -114,13 +119,98 @@ const AppdrowerNavigator = createDrawerNavigator(
   },
 );
 
+
+//bottom navigator
+// const TabNavigator = createMaterialBottomTabNavigator(
+//   {
+//     Home: {
+//       screen: Profile,
+//       navigationOptions: {
+//         tabBarLabel: 'Home',
+//         tabBarIcon: ({}) => (
+//           <View>
+//             <Icon style={[{color: '#ccc'}]} size={25} name={'ios-home'} />
+//           </View>
+//         ),
+//       },
+//     },
+//     Ticket: {
+//       screen: Ticket,
+//       navigationOptions: {
+//         tabBarLabel: 'Ticket',
+//         tabBarIcon: ({}) => (
+//           <View>
+//             <Icon style={[{color: '#ccc'}]} size={25} name={'ios-person'} />
+//           </View>
+//         ),
+//         activeColor: '#880C0C',
+//         inactiveColor: '#818181',
+//         barStyle: {backgroundColor: '#FFFFFF'},
+//       },
+//     },
+//     Taarifa: {
+//       screen: BookingList,
+//       navigationOptions: {
+//         tabBarLabel: 'Taarifa'(
+//           <View>
+//             <Icon style={[{color: '#ccc'}]} size={25} name={'ios-images'} />
+//           </View>
+//         ),
+//         activeColor: '#880C0C',
+//         inactiveColor: '#818181',
+//         barStyle: {backgroundColor: '#FFFFFF'},
+//       },
+//     },
+//     Registration: {
+//       screen: Registration,
+//       navigationOptions: {
+//         tabBarLabel: 'Offer',
+//         tabBarIcon: ({}) => (
+//           <View>
+//             <Icon style={[{color: '#ccc'}]} size={25} name={'ios-cart'} />
+//           </View>
+//         ),
+//         activeColor: '#880C0C',
+//         inactiveColor: '#818181',
+//         barStyle: {backgroundColor: '#FFFFFF'},
+//       },
+//     },
+//   },
+//   {
+//     initialRouteName: 'Home',
+//     activeColor: '#880C0C',
+//     inactiveColor: '#818181',
+//     barStyle: {backgroundColor: '#FFFFFF'},
+//   },
+// );  
+
+// class Ticket extends React.Component {  
+//   render() {  
+//       return (  
+//           <View style={styles.container}>  
+//               <Text>Tickets</Text>  
+//           </View>  
+//       );  
+//   }  
+// }  
+// const styles = StyleSheet.create({  
+//   container: {  
+//       flex: 1,  
+//       justifyContent: 'center',  
+//       alignItems: 'center'  
+//   },  
+// });  
+
+
+
+
 const AppSwitchNavigator = createSwitchNavigator({
-  login: {
-    screen: Login,
-  },
-  registration: {
-    screen: Registration,
-  },
+  // login: {
+  //   screen: Login,
+  // },
+  // registration: {
+  //   screen: Registration,
+  // },
   Dashboard: {
     screen: AppdrowerNavigator,
   },

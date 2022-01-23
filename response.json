@@ -1,0 +1,120 @@
+{
+    "config": {
+        "adapter": [Function xhrAdapter
+        ],
+        "data": undefined,
+        "headers": {
+            "Accept": "application/json, text/plain, */*"
+        },
+        "maxBodyLength": -1,
+        "maxContentLength": -1,
+        "method": "get",
+        "timeout": 0,
+        "transformRequest": [
+            [Function transformRequest
+            ]
+        ],
+        "transformResponse": [
+            [Function transformResponse
+            ]
+        ],
+        "transitional": {
+            "clarifyTimeoutError": false,
+            "forcedJSONParsing": true,
+            "silentJSONParsing": true
+        },
+        "url": "http://xtravel-fxfire.000webhostapp.com/Api/search?start_point=Arusha&end_point=Dar es Salaam&date=2022-01-23&fleet_type=",
+        "validateStatus": [Function validateStatus
+        ],
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN"
+    },
+    "data": "",
+    "headers": {
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "connection": "keep-alive",
+        "content-length": "0",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sat, 22 Jan 2022 19:58:03 GMT",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "pragma": "no-cache",
+        "server": "awex",
+        "set-cookie": [
+            "csrf_cookie_name=50d46cb8b5d4f565ad10fdf50c35da8e; expires=Sat, 22-Jan-2022 21:58:03 GMT; Max-Age=7200; path=/"
+        ],
+        "x-content-type-options": "nosniff",
+        "x-request-id": "54036958e35f3421d8454fc7b4ca70fb",
+        "x-xss-protection": "1; mode=block"
+    },
+    "request": {
+        "DONE": 4,
+        "HEADERS_RECEIVED": 2,
+        "LOADING": 3,
+        "OPENED": 1,
+        "UNSENT": 0,
+        "_aborted": false,
+        "_cachedResponse": undefined,
+        "_hasError": false,
+        "_headers": {
+            "accept": "application/json, text/plain, */*"
+        },
+        "_incrementalEvents": false,
+        "_lowerCaseResponseHeaders": {
+            "cache-control": "no-store, no-cache, must-revalidate",
+            "connection": "keep-alive",
+            "content-length": "0",
+            "content-type": "text/html; charset=UTF-8",
+            "date": "Sat, 22 Jan 2022 19:58:03 GMT",
+            "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+            "pragma": "no-cache",
+            "server": "awex",
+            "set-cookie": "csrf_cookie_name=50d46cb8b5d4f565ad10fdf50c35da8e; expires=Sat, 22-Jan-2022 21:58:03 GMT; Max-Age=7200; path=/",
+            "x-content-type-options": "nosniff",
+            "x-request-id": "54036958e35f3421d8454fc7b4ca70fb",
+            "x-xss-protection": "1; mode=block"
+        },
+        "_method": "GET",
+        "_perfKey": "network_XMLHttpRequest_http://xtravel-fxfire.000webhostapp.com/Api/search?start_point=Arusha&end_point=Dar es Salaam&date=2022-01-23&fleet_type=",
+        "_performanceLogger": {
+            "_closed": false,
+            "_extras": [Object
+            ],
+            "_pointExtras": [Object
+            ],
+            "_points": [Object
+            ],
+            "_timespans": [Object
+            ]
+        },
+        "_requestId": null,
+        "_response": "",
+        "_responseType": "",
+        "_sent": true,
+        "_subscriptions": [],
+        "_timedOut": false,
+        "_trackingName": "unknown",
+        "_url": "http://xtravel-fxfire.000webhostapp.com/Api/search?start_point=Arusha&end_point=Dar es Salaam&date=2022-01-23&fleet_type=",
+        "readyState": 4,
+        "responseHeaders": {
+            "Cache-Control": "no-store, no-cache, must-revalidate",
+            "Connection": "keep-alive",
+            "Content-Length": "0",
+            "Content-Type": "text/html; charset=UTF-8",
+            "Date": "Sat, 22 Jan 2022 19:58:03 GMT",
+            "Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+            "Pragma": "no-cache",
+            "Server": "awex",
+            "Set-Cookie": "csrf_cookie_name=50d46cb8b5d4f565ad10fdf50c35da8e; expires=Sat, 22-Jan-2022 21:58:03 GMT; Max-Age=7200; path=/",
+            "X-Content-Type-Options": "nosniff",
+            "X-Request-ID": "54036958e35f3421d8454fc7b4ca70fb",
+            "X-Xss-Protection": "1; mode=block"
+        },
+        "responseURL": "http://xtravel-fxfire.000webhostapp.com/Api/search?start_point=Arusha&end_point=Dar%20es%20Salaam&date=2022-01-23&fleet_type=",
+        "status": 500,
+        "timeout": 0,
+        "upload": {},
+        "withCredentials": true
+    },
+    "status": 500,
+    "statusText": "undefined"
+}
