@@ -151,6 +151,17 @@ export default class Registration extends Component {
                 pay: this.state,
                 settings: this.state.settings,
               });
+            } else {
+              Alert.alert(
+                this.state.settings.settings.title,
+                'Tafadhali jaribu tena!',
+                [
+                  {},
+                  {},
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+              );
             }
           })
           .catch(err => console.log(err.response));
