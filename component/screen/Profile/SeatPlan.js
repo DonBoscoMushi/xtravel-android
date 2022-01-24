@@ -8,6 +8,7 @@ import {
   FlatList,
   ScrollView,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import {Container, Header, Body, Right, Icon, Button} from 'native-base';
 import Spinner from 'react-native-spinkit';
@@ -21,6 +22,7 @@ class MyListItem extends Component {
   render() {
     const textColor = this.props.selected ? '#194F9E' : '#9E9E9E';
     return (
+      // <ImageBackground source={require('../../assets/bus_seat.png')}>
       <TouchableOpacity
         style={{
           paddingVertical: 15,
@@ -41,6 +43,7 @@ class MyListItem extends Component {
           </Text>
         </View>
       </TouchableOpacity>
+      // </ImageBackground>
     );
   }
 }
@@ -48,10 +51,7 @@ class MyListItem extends Component {
 export default class SeatPlan extends Component {
   constructor(props) {
     super(props);
-    let countP =
-      this.props.navigation.state.params.pickup.adult * 1 +
-      this.props.navigation.state.params.pickup.child * 1 +
-      this.props.navigation.state.params.pickup.special * 1;
+    let countP = this.props.navigation.state.params.pickup.adult * 1;
     this.state = {
       data: this.props.navigation.state.params.pickup,
       settings: this.props.navigation.state.params.settings,
@@ -72,11 +72,7 @@ export default class SeatPlan extends Component {
         this.props.navigation.state.params.pickup.seatdataInfo.offers == null
           ? countP < 3
             ? this.props.navigation.state.params.pickup.adult *
-                this.props.navigation.state.params.pickup.data.price +
-              this.props.navigation.state.params.pickup.child *
-                this.props.navigation.state.params.pickup.data.children_price +
-              this.props.navigation.state.params.pickup.special *
-                this.props.navigation.state.params.pickup.data.special_price
+              this.props.navigation.state.params.pickup.data.price
             : countP *
               this.props.navigation.state.params.pickup.seatdataInfo.prices
                 .group_price_per_person
@@ -84,11 +80,7 @@ export default class SeatPlan extends Component {
               .offer_number <= countP
           ? countP < 3
             ? this.props.navigation.state.params.pickup.adult *
-                this.props.navigation.state.params.pickup.data.price +
-              this.props.navigation.state.params.pickup.child *
-                this.props.navigation.state.params.pickup.data.children_price +
-              this.props.navigation.state.params.pickup.special *
-                this.props.navigation.state.params.pickup.data.special_price -
+                this.props.navigation.state.params.pickup.data.price -
               this.props.navigation.state.params.pickup.seatdataInfo.offers
                 .offer_discount *
                 1
@@ -100,11 +92,7 @@ export default class SeatPlan extends Component {
                 1
           : countP < 3
           ? this.props.navigation.state.params.pickup.adult *
-              this.props.navigation.state.params.pickup.data.price +
-            this.props.navigation.state.params.pickup.child *
-              this.props.navigation.state.params.pickup.data.children_price +
-            this.props.navigation.state.params.pickup.special *
-              this.props.navigation.state.params.pickup.data.special_price
+            this.props.navigation.state.params.pickup.data.price
           : countP *
             this.props.navigation.state.params.pickup.seatdataInfo.prices
               .group_price_per_person,
@@ -112,23 +100,20 @@ export default class SeatPlan extends Component {
   }
 
   componentDidMount = () => {
-    const itemlf = this.state.facilitis;
+    // const itemlf = this.state.facilitis;
 
-    const newArrf = [];
+    // const newArrf = [];
 
-    for (let item of itemlf) {
-      newArrf.push(item);
-    }
+    // for (let item of itemlf) {
+    //   newArrf.push(item);
+    // }
 
-    this.setState({...this.state, Fnum: JSON.stringify(newArrf)});
+    // this.setState({...this.state, Fnum: JSON.stringify(newArrf)});
 
-    let countP =
-      this.props.navigation.state.params.pickup.adult * 1 +
-      this.props.navigation.state.params.pickup.child * 1 +
-      this.props.navigation.state.params.pickup.special * 1;
+    let countP = this.props.navigation.state.params.pickup.adult * 1;
     this.setState({seatsize: countP});
 
-    console.log(this.state);
+    console.log(this.state.userDetails);
   };
 
   _keyExtractor = (item, index) => item.name;
@@ -219,10 +204,7 @@ export default class SeatPlan extends Component {
         </View>
       );
     } else {
-      let countP =
-        this.props.navigation.state.params.pickup.adult * 1 +
-        this.props.navigation.state.params.pickup.child * 1 +
-        this.props.navigation.state.params.pickup.special * 1;
+      let countP = this.props.navigation.state.params.pickup.adult * 1;
 
       return (
         <View style={[styles.AllDataVal, {marginBottom: 20}]}>
@@ -230,7 +212,7 @@ export default class SeatPlan extends Component {
             style={{
               flexDirection: 'row',
               padding: 10,
-              backgroundColor: '#003B93',
+              backgroundColor: '#B21D21',
             }}>
             <Text
               style={{
@@ -261,7 +243,7 @@ export default class SeatPlan extends Component {
                   : ' ')}{' '}
             </Text>
           </View>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               padding: 10,
@@ -295,8 +277,8 @@ export default class SeatPlan extends Component {
                     : ' * ' + this.state.data.child
                   : ' ')}{' '}
             </Text>
-          </View>
-          <View
+          </View> */}
+          {/* <View
             style={{
               flexDirection: 'row',
               padding: 10,
@@ -330,8 +312,8 @@ export default class SeatPlan extends Component {
                     : ' * ' + this.state.data.special
                   : ' ')}{' '}
             </Text>
-          </View>
-          <View
+          </View> */}
+          {/* <View
             style={{
               flexDirection: 'row',
               padding: 10,
@@ -361,12 +343,12 @@ export default class SeatPlan extends Component {
                 this.state.seatdataInfo.prices.group_price_per_person +
                 (countP >= 3 ? ' * ' + countP : ' ')}{' '}
             </Text>
-          </View>
+          </View> */}
           <View
             style={{
               flexDirection: 'row',
               padding: 10,
-              backgroundColor: '#003B93',
+              backgroundColor: '#B21D21',
             }}>
             <Text
               style={{
@@ -407,67 +389,54 @@ export default class SeatPlan extends Component {
 
     this.setState({...this.state, seatNum: JSON.stringify(newArr)});
 
-    setTimeout(() => {
-      axios
-        .get(
-          `${this.state.settings.base_url}Api/booking_history?trip_id_no=${
-            this.state.data.data.trip_id_no
-          }&passenger_id=${
-            this.state.data.userDat.data.userDa.id_no
-          }&trip_route_id=${this.state.data.data.route}&pickup_location=${
-            this.state.data.pickupData
-          }&drop_location=${this.state.data.dropData}&facilities=${
-            this.state.Fnum
-          }&price=${this.state.total}&adult=${this.state.data.adult}&child_no=${
-            this.state.data.child
-          }&special=${this.state.data.special}&total_seat=${
-            this.state.seatsize
-          }&seat_number=${this.state.seatNum}&offer_code=${
-            this.state.data.offer
-          }&booking_date=${this.state.data.day}`,
-        )
-        .then(res => {
-          if (res.data.response.status === 'ok') {
-            this.setState({
-              ...this.state,
-              bookid: res.data.response.booking_id,
-              resp: res.data.response,
-            });
-            if (res.data.response.total_seat == this.state.seatsize) {
-              this.props.navigation.navigate('passenger', {
-                userInfo: this.state,
-                settings: this.state.settings,
-              });
-            } else {
-              Alert.alert(
-                this.state.settings.settings.title,
-                this.state.settings.select_your_seat_properly +
-                  ' ' +
-                  this.state.seatsize +
-                  ' ' +
-                  this.state.settings.seat_properly,
-                [
-                  {},
-                  {},
-                  {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                {cancelable: false},
-              );
+    console.log(JSON.stringify(newArr));
 
-              this.setState({
-                ...this.state,
-                selected: new Map(),
-                seatNum: [],
-                facilitis: '',
-                resp: '',
-                bookid: '',
-              });
-            }
-            console.log(this.state);
-          }
-        })
-        .catch(err => console.log(err.response));
-    }, 1000);
+    if (newArr.length == this.state.seatsize) {
+      this.props.navigation.navigate('registration', {
+        userInfo: this.state,
+        settings: this.state.settings,
+      });
+    } else {
+      Alert.alert(
+        this.state.settings.settings.title,
+        this.state.settings.select_your_seat_properly +
+          ' ' +
+          this.state.seatsize +
+          ' ' +
+          this.state.settings.seat_properly,
+        [{}, {}, {text: 'OK', onPress: () => console.log('OK Pressed')}],
+        {cancelable: false},
+      );
+
+      this.setState({
+        ...this.state,
+        selected: new Map(),
+        seatNum: [],
+        facilitis: '',
+        resp: '',
+        bookid: '',
+      });
+    }
+
+    //move this to user filling his details
+    // setTimeout(() => {
+    //   axios
+    //     .get(
+    //       `${this.state.settings.base_url}Api/booking_history?trip_id_no=${this.state.data.data.trip_id_no}&passenger_id=${this.state.data.userDat.data.userDa.id_no}&trip_route_id=${this.state.data.data.route}&pickup_location=${this.state.data.pickupData}&drop_location=${this.state.data.dropData}&facilities=${this.state.Fnum}&price=${this.state.total}&adult=${this.state.data.adult}&child_no=${this.state.data.child}&special=${this.state.data.special}&total_seat=${this.state.seatsize}&seat_number=${this.state.seatNum}&offer_code=${this.state.data.offer}&booking_date=${this.state.data.day}`,
+    //     )
+    //     .then(res => {
+    //       if (res.data.response.status === 'ok') {
+    //         this.setState({
+    //           ...this.state,
+    //           bookid: res.data.response.booking_id,
+    //           resp: res.data.response,
+    //         });
+
+    //         console.log(this.state);
+    //       }
+    //     })
+    //     .catch(err => console.log(err.response));
+    // }, 1000);
   };
 
   render() {
@@ -514,7 +483,7 @@ export default class SeatPlan extends Component {
               style={{
                 flexDirection: 'row',
                 padding: 10,
-                backgroundColor: '#003B93',
+                backgroundColor: '#B21D21',
               }}>
               <Text
                 style={{
@@ -575,19 +544,42 @@ export default class SeatPlan extends Component {
           </View>
 
           {this._getDataPrice()}
-        </ScrollView>
-        <TouchableOpacity
-          style={[styles.searchtour, {justifyContent: 'center'}]}
-          onPress={() => {
-            this._passDetPage();
-            // console.log(this.state)
-          }}>
-          <View>
-            <Text style={styles.searchtourtext}>
-              {this.state.settings.continue}
-            </Text>
+
+          <View
+            style={{
+              alignContent: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                flex: 1,
+                width: 175,
+                justifyContent: 'center',
+                alignContent: 'center',
+                backgroundColor: '#F9F9F9',
+              }}>
+              <View>
+                <TouchableOpacity
+                  style={[
+                    styles.searchtour,
+                    {justifyContent: 'center', borderRadius: 40},
+                  ]}
+                  onPress={() => {
+                    this._passDetPage();
+                    console.log(this.state);
+                  }}>
+                  <View>
+                    <Text style={styles.searchtourtext}>
+                      {this.state.settings.continue}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        </TouchableOpacity>
+        </ScrollView>
       </Container>
     );
   }
@@ -616,7 +608,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
   },
   searchtour: {
-    backgroundColor: '#003B93',
+    backgroundColor: '#B21D21',
     // justifyContent:'center',
     alignItems: 'center',
     height: 50,

@@ -123,7 +123,7 @@ export default class JourneyDetails extends Component {
                 />
                 <View style={{flex: 1, marginStart: 3}}>
                   <Text style={[styles.text_start, {marginTop: 5}]}>
-                    BM Coach
+                    xTravel
                   </Text>
                   <Text style={styles.trip_txt}>
                     {value.pickup_trip_location}
@@ -457,7 +457,6 @@ const styles = StyleSheet.create({
   },
   searchtour: {
     backgroundColor: '#003B93',
-    // justifyContent:'center',
     alignItems: 'center',
     height: 50,
   },

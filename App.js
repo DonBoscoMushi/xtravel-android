@@ -29,10 +29,10 @@ import SideDrawerPage from './component/screen/Profile/SideDrawerPage';
 import BookingList from './component/screen/BookingList/BookingList';
 import ViewBooking from './component/screen/BookingList/ViewBooking';
 
-import {StyleSheet, Text, View,Button} from 'react-native';  
-// import { createBottomTabNavigator, createAppContainer} from 'react-navigation';  
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';  
-import Icon from 'react-native-vector-icons/Ionicons';  
+import {StyleSheet, Text, View, Button} from 'react-native';
+// import { createBottomTabNavigator, createAppContainer} from 'react-navigation';
+import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -49,13 +49,16 @@ const AppStackNavigator = createStackNavigator(
       screen: PassengerDetails,
     },
     pickUp: {
-      screen: PickUp, 
+      screen: PickUp,
     },
     pay: {
       screen: Payment,
     },
     forget: {
       screen: ForgetPass,
+    },
+    registration: {
+      screen: Registration,
     },
     paypaypal: {
       screen: PayPaypal,
@@ -119,7 +122,6 @@ const AppdrowerNavigator = createDrawerNavigator(
   },
 );
 
-
 //bottom navigator
 // const TabNavigator = createMaterialBottomTabNavigator(
 //   {
@@ -182,27 +184,24 @@ const AppdrowerNavigator = createDrawerNavigator(
 //     inactiveColor: '#818181',
 //     barStyle: {backgroundColor: '#FFFFFF'},
 //   },
-// );  
+// );
 
-// class Ticket extends React.Component {  
-//   render() {  
-//       return (  
-//           <View style={styles.container}>  
-//               <Text>Tickets</Text>  
-//           </View>  
-//       );  
-//   }  
-// }  
-// const styles = StyleSheet.create({  
-//   container: {  
-//       flex: 1,  
-//       justifyContent: 'center',  
-//       alignItems: 'center'  
-//   },  
-// });  
-
-
-
+// class Ticket extends React.Component {
+//   render() {
+//       return (
+//           <View style={styles.container}>
+//               <Text>Tickets</Text>
+//           </View>
+//       );
+//   }
+// }
+// const styles = StyleSheet.create({
+//   container: {
+//       flex: 1,
+//       justifyContent: 'center',
+//       alignItems: 'center'
+//   },
+// });
 
 const AppSwitchNavigator = createSwitchNavigator({
   // login: {

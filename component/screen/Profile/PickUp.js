@@ -86,7 +86,8 @@ export default class PickUp extends Component {
       child: '',
       special: '',
       offer: '',
-
+      // breakfast: false,
+      // wifi: false,
       selected: new Map(),
       FasilityNum: [],
     };
@@ -135,8 +136,7 @@ export default class PickUp extends Component {
   }
 
   _countNavi = () => {
-    let total_Seat =
-      this.state.adult * 1 + this.state.child * 1 + this.state.special * 1;
+    let total_Seat = this.state.adult * 1;
 
     if (this.state.pickupData == '' || this.state.dropData == '') {
       Alert.alert(
@@ -146,31 +146,18 @@ export default class PickUp extends Component {
         {cancelable: false},
       );
     } else {
-      if (
-        this.state.adult == '' &&
-        this.state.child == '' &&
-        this.state.special == ''
-      ) {
+      if (this.state.ava > total_Seat) {
+        this.props.navigation.navigate('seatplan', {
+          pickup: this.state,
+          settings: this.state.settings,
+        });
+      } else {
         Alert.alert(
           this.state.settings.settings.title,
-          this.state.settings.must_put_atlest_seat_num,
+          this.state.ava + ' ' + this.state.settings.seats_available,
           [{}, {}, {text: 'OK', onPress: () => console.log('OK Pressed')}],
           {cancelable: false},
         );
-      } else {
-        if (this.state.ava > total_Seat) {
-          this.props.navigation.navigate('seatplan', {
-            pickup: this.state,
-            settings: this.state.settings,
-          });
-        } else {
-          Alert.alert(
-            this.state.settings.settings.title,
-            this.state.ava + ' ' + this.state.settings.seats_available,
-            [{}, {}, {text: 'OK', onPress: () => console.log('OK Pressed')}],
-            {cancelable: false},
-          );
-        }
       }
     }
   };
@@ -189,34 +176,34 @@ export default class PickUp extends Component {
     this.setState({adult: newText});
   }
 
-  onChilsChanged(text) {
-    let newText = '';
-    let numbers = '0123456789';
+  // onChilsChanged(text) {
+  //   let newText = '';
+  //   let numbers = '0123456789';
 
-    for (var i = 0; i < text.length; i++) {
-      if (numbers.indexOf(text[i]) > -1) {
-        newText = newText + text[i];
-      } else {
-        alert('please enter numbers only');
-      }
-    }
-    this.setState({child: newText});
-  }
+  //   for (var i = 0; i < text.length; i++) {
+  //     if (numbers.indexOf(text[i]) > -1) {
+  //       newText = newText + text[i];
+  //     } else {
+  //       alert('please enter numbers only');
+  //     }
+  //   }
+  //   this.setState({child: newText});
+  // }
 
-  onSpecialChanged(text) {
-    let newText = '';
-    let numbers = '0123456789';
+  // onSpecialChanged(text) {
+  //   let newText = '';
+  //   let numbers = '0123456789';
 
-    for (var i = 0; i < text.length; i++) {
-      if (numbers.indexOf(text[i]) > -1) {
-        newText = newText + text[i];
-      } else {
-        // your call back function
-        alert('please enter numbers only');
-      }
-    }
-    this.setState({special: newText});
-  }
+  //   for (var i = 0; i < text.length; i++) {
+  //     if (numbers.indexOf(text[i]) > -1) {
+  //       newText = newText + text[i];
+  //     } else {
+  //       // your call back function
+  //       alert('please enter numbers only');
+  //     }
+  //   }
+  //   this.setState({special: newText});
+  // }
 
   _getoffergenerator = () => {
     if (this.state.seatdataInfo == '') {
@@ -302,7 +289,7 @@ export default class PickUp extends Component {
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 9}}>
-          <Container style={{backgroundColor: '#F9F9F9'}}>
+          <Container style={{backgroundColor: '#F2F0F0'}}>
             <Header style={styles.loginHeader}>
               <Body>
                 <View style={styles.logoD}>
@@ -350,6 +337,7 @@ export default class PickUp extends Component {
                       borderWidth: 2,
                       borderColor: '#fff',
                       backgroundColor: '#fff',
+                      borderRadius: 15,
                       paddingHorizontal: 10,
                     }}>
                     <Picker
@@ -379,6 +367,7 @@ export default class PickUp extends Component {
                       borderWidth: 2,
                       borderColor: '#fff',
                       backgroundColor: '#fff',
+                      borderRadius: 15,
                       paddingHorizontal: 10,
                     }}>
                     <Picker
@@ -397,7 +386,6 @@ export default class PickUp extends Component {
                   </View>
                 </View>
               </View>
-
               <View
                 style={{
                   flexDirection: 'row',
@@ -408,12 +396,12 @@ export default class PickUp extends Component {
                 <View style={{flex: 1}}>
                   <View style={{marginBottom: 8}}>
                     <Text style={styles.locationDet}>
-                      {this.state.settings.adult}
+                      {/* {this.state.settings.adult } */}Number of Passengers
                     </Text>
                   </View>
 
                   <View style={{paddingHorizontal: 3}}>
-                    <View style={{borderWidth: 2, borderColor: '#e3e3e3'}}>
+                    <View style={{borderWidth: 1, borderColor: '#e3e3e3'}}>
                       <TextInput
                         style={styles.textInput}
                         keyboardType="numeric"
@@ -424,81 +412,44 @@ export default class PickUp extends Component {
                     </View>
                   </View>
                 </View>
-
-                <View style={{flex: 1}}>
-                  <View style={{marginBottom: 8}}>
-                    <Text style={styles.locationDet}>
-                      {this.state.settings.children}
-                    </Text>
-                  </View>
-
-                  <View style={{paddingHorizontal: 3}}>
-                    <View style={{borderWidth: 2, borderColor: '#e3e3e3'}}>
-                      <TextInput
-                        style={styles.textInput}
-                        keyboardType="numeric"
-                        onChangeText={text => this.onChilsChanged(text)}
-                        value={this.state.child}
-                        maxLength={3} //setting limit of input
-                      />
-                    </View>
-                  </View>
-                </View>
-
-                <View style={{flex: 1}}>
-                  <View style={{marginBottom: 8}}>
-                    <Text style={styles.locationDet}>
-                      {this.state.settings.special}
-                    </Text>
-                  </View>
-
-                  <View style={{paddingHorizontal: 3}}>
-                    <View style={{borderWidth: 2, borderColor: '#e3e3e3'}}>
-                      <TextInput
-                        style={styles.textInput}
-                        keyboardType="numeric"
-                        onChangeText={text => this.onSpecialChanged(text)}
-                        value={this.state.special}
-                        maxLength={3} //setting limit of input
-                      />
-                    </View>
-                  </View>
-                </View>
               </View>
 
               {this._getoffergenerator()}
 
-              <View style={{marginBottom: 10, width: '92%', marginLeft: '4%'}}>
-                <View style={{marginBottom: 8}}>
-                  <Text style={styles.locationDet}>
-                    {this.state.settings.facilities}
-                  </Text>
-                </View>
+              <View
+                style={{
+                  alignContent: 'center',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    flex: 1,
+                    width: 175,
+                    justifyContent: 'center',
+                    alignContent: 'center',
 
-                <View style={{flexDirection: 'row'}}>
-                  {this._getFacilitiesData()}
+                    backgroundColor: '#F9F9F9',
+                    marginTop: 40,
+                  }}>
+                  <View>
+                    <TouchableOpacity
+                      style={[
+                        styles.searchtour,
+                        {justifyContent: 'center', borderRadius: 40},
+                      ]}
+                      onPress={() => this._countNavi()}
+                      // onPress={()=> console.log(this.state.selected)}
+                    >
+                      <Text style={styles.searchtourtext}>
+                        {this.state.settings.continue}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </ScrollView>
           </Container>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'flex-end',
-            backgroundColor: '#F9F9F9',
-          }}>
-          <View>
-            <TouchableOpacity
-              style={[styles.searchtour, {justifyContent: 'center'}]}
-              onPress={() => this._countNavi()}
-              // onPress={()=> console.log(this.state.selected)}
-            >
-              <Text style={styles.searchtourtext}>
-                {this.state.settings.continue}
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
     );
@@ -528,7 +479,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
   },
   searchtour: {
-    backgroundColor: '#003B93',
+    backgroundColor: '#B21D21',
     // justifyContent:'center',
     alignItems: 'center',
     height: 50,
@@ -549,6 +500,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     backgroundColor: '#ffffff',
     height: 40,
+    textAlign: 'center',
   },
   searchtourtext: {
     color: '#ffffff',
@@ -556,17 +508,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
   },
   searchtour: {
-    backgroundColor: '#003B93',
+    backgroundColor: '#B21D21',
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
   },
 });
-// <Picker
-//                                             mode='dropdown'
-//                                             selectedValue={this.state.dropData}
-//                                             onValueChange={this.ondropValueChange.bind(this)}
-//                                             >
-//                                             <Picker.Item key='k' label={this.state.settings.select_drop_location} value="" />
-//                                             { this._getpickupData() }
-//                                         </Picker>

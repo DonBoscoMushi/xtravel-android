@@ -3,6 +3,7 @@ import {
   Text,
   StyleSheet,
   View,
+  Dimensions,
   Image,
   ScrollView,
   TouchableOpacity,
@@ -94,15 +95,15 @@ export default class Profile extends Component {
 
   componentDidMount = () => {
     this._isMounted = true;
-
     this._checkNetwork();
 
     setInterval(() => {
+      // this._checkNetwork();
       // AsyncStorage.getItem('state_data', (error, res) => {
       //   let d = JSON.parse(res);
       //   AsyncStorage.getItem('user_data', (error, resData) => {
       //     let p = JSON.parse(resData);
-      //     // this._pointAllData();
+      this._pointAllData();
       //     // this.getfleetType();
       //     this.setState({
       //       // userDa: p,
@@ -111,7 +112,7 @@ export default class Profile extends Component {
       //     });
       //   });
       // });
-    }, 2000);
+    }, 5000);
   };
 
   componentWillUnmount() {
@@ -290,112 +291,110 @@ export default class Profile extends Component {
       } else {
         return (
           <View style={{flex: 1}}>
-            <ImageBackground
-              source={require('../../assets/bg-img.png')}
-              style={styles.image}>
-              <ScrollView>
-                <Container>
-                  <Header style={styles.loginHeader}>
-                    <Left style={(styles.marginLeft = 2)}>
-                      <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity
-                          onPress={() => this.props.navigation.openDrawer()}>
-                          <Icon
-                            style={{fontSize: 22}}
-                            type="FontAwesome"
-                            name="bars"
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </Left>
-
-                    <Body>
-                      <View style={styles.logoD}>
-                        <Image
-                          style={{
-                            width: 138,
-                            height: 90,
-                            resizeMode: 'center',
-                          }}
-                          source={{uri: this.state.logo}}
+            <ScrollView>
+              <Container>
+                <Header style={styles.loginHeader}>
+                  <Left style={(styles.marginLeft = 2)}>
+                    <View style={{flexDirection: 'row'}}>
+                      <TouchableOpacity
+                        onPress={() => this.props.navigation.openDrawer()}>
+                        <Icon
+                          style={{fontSize: 22}}
+                          type="FontAwesome"
+                          name="bars"
                         />
-                      </View>
-                    </Body>
-
-                    <Right style={(styles.marginLeft = 2)}>
-                      <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity
-                          onPress={() => this.props.navigation.openDrawer()}>
-                          <Icon
-                            style={{fontSize: 22}}
-                            type="FontAwesome"
-                            name="mobile-phone"
-                          />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                          onPress={() => this.props.navigation.openDrawer()}>
-                          <Icon
-                            style={{fontSize: 22, marginLeft: 7}}
-                            type="FontAwesome"
-                            name="envelope"
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </Right>
-                  </Header>
-
-                  <Content>
-                    <View style={[styles.searchtour]}>
-                      <Text style={[styles.searchtourtext]}>
-                        {'Chagua Safari'}
-                      </Text>
+                      </TouchableOpacity>
                     </View>
+                  </Left>
 
+                  <Body>
+                    <View style={styles.logoD}>
+                      <Image
+                        style={{
+                          width: 138,
+                          height: 90,
+                          resizeMode: 'center',
+                        }}
+                        source={{uri: this.state.logo}}
+                      />
+                    </View>
+                  </Body>
+
+                  <Right style={(styles.marginLeft = 2)}>
+                    <View style={{flexDirection: 'row'}}>
+                      <TouchableOpacity
+                        onPress={() => this.props.navigation.openDrawer()}>
+                        <Icon
+                          style={{fontSize: 22}}
+                          type="FontAwesome"
+                          name="mobile-phone"
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => this.props.navigation.openDrawer()}>
+                        <Icon
+                          style={{fontSize: 22, marginLeft: 7}}
+                          type="FontAwesome"
+                          name="envelope"
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </Right>
+                </Header>
+
+                <Content style={{backgroundColor: '#D21B21'}}>
+                  <View style={[styles.searchtour, {backgroundColor: '#fff'}]}>
+                    <Text style={[styles.searchtourtext]}>
+                      {'Chagua Safari'}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#fff',
+                      borderBottomLeftRadius: 15,
+                      borderBottomRightRadius: 80,
+                    }}>
                     <View
                       style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        width: '80%',
+                        marginLeft: '2%',
+                        marginVertical: 15,
                       }}>
-                      <View
-                        style={{
-                          width: '80%',
-                          marginLeft: '2%',
-                          marginVertical: 15,
-                        }}>
-                        <View style={styles.locksearchDet}>
-                          <View
-                            style={{
-                              flexDirection: 'column',
-                              marginTop: 5,
-                              marginBottom: 7,
-                            }}>
-                            <View style={{flex: 4, marginBottom: 5}}>
-                              <Text style={styles.startpoint}>
-                                {this.state.settings.start_point}
-                              </Text>
-                              <View style={styles._Rectangle_10}>
-                                <Picker
-                                  mode="dropdown"
-                                  selectedValue={this.state.startPointVal}
-                                  onValueChange={this.onstartValueChange.bind(
-                                    this,
-                                  )}>
-                                  <Item
-                                    key="k"
-                                    label={
-                                      this.state.settings.select_start_point
-                                    }
-                                    value=""
-                                    style={{fontSize: 14}}
-                                  />
-                                  {this._getStatData()}
-                                </Picker>
-                              </View>
+                      <View style={styles.locksearchDet}>
+                        <View
+                          style={{
+                            flexDirection: 'column',
+                            marginTop: 5,
+                            marginBottom: 7,
+                          }}>
+                          <View style={{flex: 4, marginBottom: 5}}>
+                            <Text style={styles.startpoint}>
+                              {this.state.settings.start_point}
+                            </Text>
+                            <View style={styles._Rectangle_10}>
+                              <Picker
+                                mode="dropdown"
+                                selectedValue={this.state.startPointVal}
+                                onValueChange={this.onstartValueChange.bind(
+                                  this,
+                                )}>
+                                <Item
+                                  key="k"
+                                  label={this.state.settings.select_start_point}
+                                  value=""
+                                  style={{fontSize: 14}}
+                                />
+                                {this._getStatData()}
+                              </Picker>
                             </View>
+                          </View>
 
-                            {/* <View
+                          {/* <View
                               style={{
                                 flex: 2,
                                 alignItems: 'center',
@@ -407,95 +406,110 @@ export default class Profile extends Component {
                               />
                             </View> */}
 
-                            <View style={{flex: 4, marginBottom: 5}}>
-                              <Text style={styles.startpoint}>
-                                {this.state.settings.end_point}
-                              </Text>
-                              <View style={styles._Rectangle_10}>
-                                <Picker
-                                  mode="dropdown"
-                                  selectedValue={this.state.endPointVal}
-                                  onValueChange={this.onendValueChange.bind(
-                                    this,
-                                  )}>
-                                  <Item
-                                    key="k"
-                                    label={this.state.settings.select_end_point}
-                                    value=""
-                                    style={{fontSize: 14}}
-                                  />
-                                  {this._getStatData()}
-                                </Picker>
-                              </View>
+                          <View style={{flex: 4, marginBottom: 5}}>
+                            <Text style={styles.startpoint}>
+                              {this.state.settings.end_point}
+                            </Text>
+                            <View style={styles._Rectangle_10}>
+                              <Picker
+                                mode="dropdown"
+                                selectedValue={this.state.endPointVal}
+                                onValueChange={this.onendValueChange.bind(
+                                  this,
+                                )}>
+                                <Item
+                                  key="k"
+                                  label={this.state.settings.select_end_point}
+                                  value=""
+                                  style={{fontSize: 14}}
+                                />
+                                {this._getStatData()}
+                              </Picker>
                             </View>
                           </View>
+                        </View>
 
-                          <View style={{flexDirection: 'row', marginBottom: 5}}>
-                            <Text style={styles.locationDet}>
-                              {this.state.settings.journey_date}
-                            </Text>
-                          </View>
+                        <View style={{flexDirection: 'row', marginBottom: 5}}>
+                          <Text style={styles.locationDet}>
+                            {this.state.settings.journey_date}
+                          </Text>
+                        </View>
 
-                          <View style={styles._Rectangle_10}>
-                            <View style={{flexDirection: 'row'}}>
-                              <View style={{flex: 8}}>
-                                <DatePicker
-                                  defaultDate={new Date()}
-                                  minimumDate={new Date(Date.now())}
-                                  maximumDate={new Date(2040, 12, 31)}
-                                  locale={'en'}
-                                  timeZoneOffsetInMinutes={undefined}
-                                  modalTransparent={false}
-                                  animationType={'slide'}
-                                  androidMode={'default'}
-                                  placeHolderText={
-                                    this.state.settings.select_journey_date
-                                  }
-                                  textStyle={{color: '#000'}}
-                                  placeHolderTextStyle={{
-                                    color: '#000',
-                                    fontSize: 14,
-                                  }}
-                                  onDateChange={this.setDate}
-                                />
-                              </View>
-                              <View style={{flex: 1, marginEnd: 7}}>
-                                <Image
-                                  style={{
-                                    width: 25,
-                                    height: 25,
-                                    resizeMode: 'contain',
-                                    marginTop: 8,
-                                  }}
-                                  source={require('../../assets/cal.png')}
-                                />
-                              </View>
+                        <View style={styles._Rectangle_10}>
+                          <View style={{flexDirection: 'row'}}>
+                            <View style={{flex: 8}}>
+                              <DatePicker
+                                defaultDate={new Date()}
+                                minimumDate={new Date(Date.now())}
+                                maximumDate={new Date(2040, 12, 31)}
+                                locale={'en'}
+                                timeZoneOffsetInMinutes={undefined}
+                                modalTransparent={false}
+                                animationType={'slide'}
+                                androidMode={'default'}
+                                placeHolderText={
+                                  this.state.settings.select_journey_date
+                                }
+                                textStyle={{color: '#000'}}
+                                placeHolderTextStyle={{
+                                  color: '#000',
+                                  fontSize: 14,
+                                }}
+                                onDateChange={this.setDate}
+                              />
+                            </View>
+                            <View style={{flex: 1, marginEnd: 7}}>
+                              <Image
+                                style={{
+                                  width: 25,
+                                  height: 25,
+                                  resizeMode: 'contain',
+                                  marginTop: 8,
+                                }}
+                                source={require('../../assets/cal.png')}
+                              />
                             </View>
                           </View>
                         </View>
                       </View>
                     </View>
-                  </Content>
-                </Container>
-              </ScrollView>
+                  </View>
+                  <View
+                    style={{
+                      alignContent: 'center',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginTop: 20,
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        width: 175,
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                      }}>
+                      <View>
+                        <TouchableOpacity
+                          style={[
+                            styles.searchtour,
+                            {justifyContent: 'center', borderRadius: 40},
+                          ]}
+                          onPress={() => this._searchJourneyTour()}>
+                          <View style={{flexDirection: 'row'}}>
+                            {/* {searchIcon} */}
+                            <Text style={[styles.searchtourtext]}>
+                              {this.state.settings.search}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </Content>
+              </Container>
+            </ScrollView>
 
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <View style={styles._tafuta_basi}>
-                  <TouchableOpacity
-                    style={[styles.searchtour, {flexDirection: 'row'}]}
-                    onPress={() => this._searchJourneyTour()}>
-                    {searchIcon}
-                    <Text style={[styles.searchtourtext, {marginLeft: 8}]}>
-                      {this.state.settings.search}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              {/* <View
+            {/* <View
                 style={{
                   flex: 1,
                   justifyContent: 'flex-end',
@@ -512,7 +526,6 @@ export default class Profile extends Component {
                   </TouchableOpacity>
                 </View>
               </View> */}
-            </ImageBackground>
           </View>
         );
       }
@@ -633,6 +646,7 @@ const styles = StyleSheet.create({
   searchtour: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#FFF',
     height: 50,
   },
   locksearchDet: {
