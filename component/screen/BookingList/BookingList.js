@@ -125,7 +125,7 @@ export default class BookingList extends Component {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <Text style={{color: '#003B93', fontSize: 16}}>
+                <Text style={{color: '#B21D21', fontSize: 16}}>
                   {data.date}
                 </Text>
               </View>
@@ -139,7 +139,7 @@ export default class BookingList extends Component {
                 <Text
                   style={{
                     alignItems: 'center',
-                    color: '#003B93',
+                    color: '#B21D21',
                     fontSize: 16,
                   }}>
                   {data.firstname}
@@ -161,7 +161,7 @@ export default class BookingList extends Component {
                       name="eye"
                       style={{
                         fontSize: 15,
-                        color: '#003B93',
+                        color: '#B21D21',
                         marginRight: 5,
                         marginTop: 4,
                       }}
@@ -169,7 +169,7 @@ export default class BookingList extends Component {
                     <Text
                       style={{
                         alignItems: 'center',
-                        color: '#003B93',
+                        color: '#B21D21',
                         fontSize: 16,
                       }}>
                       View
@@ -210,7 +210,7 @@ export default class BookingList extends Component {
             <View
               style={{
                 flexDirection: 'row',
-                backgroundColor: '#003B93',
+                backgroundColor: '#B21D21',
                 paddingHorizontal: 5,
                 paddingVertical: 10,
               }}>

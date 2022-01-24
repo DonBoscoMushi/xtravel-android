@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Aleo-Bold',
   },
   searchtour:{
-      backgroundColor:'#003B93',      
+      backgroundColor:'#B21D21',      
       justifyContent:'center',
       alignItems:'center',
       height:50
@@ -566,7 +566,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Aleo-Bold',
     },
     searchtour:{
-        backgroundColor:'#003B93',      
+        backgroundColor:'#B21D21',      
         justifyContent:'center',
         alignItems:'center',
         height:50
@@ -592,7 +592,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Aleo-Bold',
     },
     searchtour:{
-        backgroundColor:'#003B93',      
+        backgroundColor:'#B21D21',      
         justifyContent:'center',
         alignItems:'center',
         height:50
@@ -694,7 +694,7 @@ export default class SeatPlan extends Component {
                         <FontAwesome5
                             name={'chair'} 
                             size={40} 
-                            color='#003B93' 
+                            color='#B21D21' 
                             />
                     </TouchableOpacity>
                 </View>
@@ -727,19 +727,19 @@ export default class SeatPlan extends Component {
         </View>
         }else{
             return <View style={[styles.AllDataVal,{marginBottom:20}]}>
-                <View style={{flexDirection:'row',padding:10, backgroundColor:'#003B93',}}>
+                <View style={{flexDirection:'row',padding:10, backgroundColor:'#B21D21',}}>
                         <Text style={{flex:2,fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-start', justifyContent:'flex-start', color:'#fff'}}>{'Adult Price'.toUpperCase()}</Text>
                         <Text style={{flex:1, fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-end', justifyContent:'flex-end',color:'#fff'}}>{':  ' + this.state.seatdataInfo.prices.price }  </Text>
                     </View>
-                    <View style={{flexDirection:'row',padding:10, backgroundColor:'#003B93',}}>
+                    <View style={{flexDirection:'row',padding:10, backgroundColor:'#B21D21',}}>
                         <Text style={{flex:2,fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-start', justifyContent:'flex-start', color:'#fff'}}>{'Child  Price'.toUpperCase()}</Text>
                         <Text style={{flex:1, fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-end', justifyContent:'flex-end',color:'#fff'}}>{':  ' + this.state.seatdataInfo.prices.children_price }  </Text>
                     </View>
-                    <View style={{flexDirection:'row',padding:10, backgroundColor:'#003B93',}}>
+                    <View style={{flexDirection:'row',padding:10, backgroundColor:'#B21D21',}}>
                         <Text style={{flex:2,fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-start', justifyContent:'flex-start', color:'#fff'}}>{'Special Price'.toUpperCase()}</Text>
                         <Text style={{flex:1, fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-end', justifyContent:'flex-end',color:'#fff'}}>{':  ' + this.state.seatdataInfo.prices.special_price }  </Text>
                     </View>
-                    <View style={{flexDirection:'row',padding:10, backgroundColor:'#003B93',}}>
+                    <View style={{flexDirection:'row',padding:10, backgroundColor:'#B21D21',}}>
                         <Text style={{flex:2,fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-start', justifyContent:'flex-start', color:'#fff'}}>{'Group Price (min 3)'.toUpperCase()}</Text>
                         <Text style={{flex:1, fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-end', justifyContent:'flex-end',color:'#fff'}}>{':  ' + this.state.seatdataInfo.prices.group_price_per_person }  </Text>
                     </View>
@@ -774,7 +774,7 @@ export default class SeatPlan extends Component {
                 </View>
 
                 <View style={styles.AllDataVal}>
-                    <View style={{flexDirection:'row',padding:10, backgroundColor:'#003B93',}}>
+                    <View style={{flexDirection:'row',padding:10, backgroundColor:'#B21D21',}}>
                         <Text style={{flex:2,fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-start', justifyContent:'flex-start', color:'#fff'}}>{'Seat Layout'.toUpperCase()}</Text>
                         <Text style={{flex:1, fontFamily: 'Aleo-Bold',fontSize:17,alignItems:'flex-end', justifyContent:'flex-end',color:'#fff'}}>{this.state.data.fleet_seats + '  Seats'.toUpperCase() }  </Text>
                     </View>
@@ -827,7 +827,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Aleo-Bold',
     },
     searchtour:{
-        backgroundColor:'#003B93',      
+        backgroundColor:'#B21D21',      
         justifyContent:'center',
         alignItems:'center',
         height:50

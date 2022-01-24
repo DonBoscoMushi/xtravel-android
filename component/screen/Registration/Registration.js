@@ -33,10 +33,12 @@ export default class Registration extends Component {
       address: '',
       phone: '',
       nid: '',
+      total: '',
       settings: this.props.navigation.state.params.settings,
       allinfoData: this.props.navigation.state.params.userInfo,
       bookid: this.props.navigation.state.params.userInfo.bookid,
-      seatNum: this.props.navigation.state.params.userInfo.seatNum,
+      // seatNum: this.props.navigation.state.params.userInfo.seatNum,
+      seatNum: this.props.navigation.state.params.seatNum,
       facilitis: this.props.navigation.state.params.userInfo.facilitis,
       resp: this.props.navigation.state.params.userInfo.resp,
       isChecked: true,
@@ -48,7 +50,6 @@ export default class Registration extends Component {
 
   _regBus365 = () => {
     // alert(this.state.fname + " "+this.state.lname + " "+this.state.email + " "+this.state.pass + " "+this.state.confirmP )
-    console.log(this.state);
     if (
       this.state.firstname == '' ||
       this.state.lastname == '' ||
@@ -63,104 +64,97 @@ export default class Registration extends Component {
     } else {
       Keyboard.dismiss();
 
-      console.log(
-        this.state.allinfoData.data.data.trip_id_no +
-          '\n' +
-          this.state.userid +
-          '\n' +
-          this.state.allinfoData.data.data.route +
-          '\n' +
-          this.state.allinfoData.data.pickupData +
-          '\n' +
-          this.state.allinfoData.data.dropData +
-          '\n' +
-          this.state.allinfoData.Fnum +
-          '\n' +
-          this.state.allinfoData.total +
-          '\n' +
-          this.state.allinfoData.data.adult +
-          '\n' +
-          this.state.allinfoData.seatsize +
-          '\n' +
-          this.state.allinfoData.seatNum +
-          '\n' +
-          this.state.allinfoData.data.offer +
-          '\n' +
-          this.state.allinfoData.data.day,
-      );
+      axios
+        .get(
+          `${this.state.settings.base_url}Api/user_registration?firstname=${this.state.firstname}&lastname=${this.state.lastname}&email=${this.state.email}&password=${this.state.pass}&nid=${this.state.nid}&address=${this.state.address}&phone=${this.state.phone}&id_no=${this.state.userid}`,
+        )
+        .then(res => {
+          if (res.data.response.status == 'ok') {
+            // Alert.alert(
+            //   this.state.settings.settings.title,
+            //   res.data.response.message,
+            //   [
+            //     {},
+            //     {},
+            //     {
+            //       text: 'OK',
+            //       onPress: () => this.props.navigation.navigate('login'),
+            //     },
+            //   ],
+            //   {cancelable: false},
+            // );
+            // this.setState({
+            //   address: '',
+            //   firstname: '',
+            //   lastname: '',
+            //   email: '',
+            //   pass: '',
+            //   confirmP: '',
+            //   nid: '',
+            // });
+          } else {
+            Alert.alert(
+              this.state.settings.settings.title,
+              res.data.response.message,
+              [{}, {}, {text: 'OK', onPress: () => console.log('OK Pressed')}],
+              {cancelable: false},
+            );
+          }
+
+          // console.log(res.data.response.status)
+        })
+        .catch(error => console.log(error.response));
+
+      // console.log(
+      //   this.state.allinfoData.data.data.trip_id_no +
+      //     '\n' +
+      //     this.state.userid +
+      //     '\n' +
+      //     this.state.allinfoData.data.data.route +
+      //     '\n' +
+      //     this.state.allinfoData.data.pickupData +
+      //     '\n' +
+      //     this.state.allinfoData.data.dropData +
+      //     '\n' +
+      //     this.state.allinfoData.Fnum +
+      //     '\n' +
+      //     this.state.allinfoData.total +
+      //     '\n' +
+      //     this.state.allinfoData.data.adult +
+      //     '\n' +
+      //     this.state.allinfoData.seatsize +
+      //     '\n' +
+      //     this.state.seatNum +
+      //     '\n' +
+      //     this.state.allinfoData.data.offer +
+      //     '\n' +
+      //     this.state.allinfoData.data.day,
+      // );
+
+      // );
+
       // send data to db
-      // setTimeout(() => {
-      //   axios
-      //   .get(
-      //     `${this.state.settings.base_url}Api/booking_history?trip_id_no=${
-      //       this.state.data.data.trip_id_no
-      //     }&passenger_id=${
-      //       this.state.userid
-      //     }&trip_route_id=${this.state.data.data.route}&pickup_location=${
-      //       this.state.data.pickupData
-      //     }&drop_location=${this.state.data.dropData}&facilities=${
-      //       this.state.Fnum
-      //     }&price=${this.state.total}&adult=${this.state.data.adult}&total_seat=${
-      //       this.state.seatsize
-      //     }&seat_number=${this.state.seatNum}&offer_code=${
-      //       this.state.data.offer
-      //     }&booking_date=${this.state.data.day}`,
-      //   )
-      //     .then(res => {
-      //       if (res.data.response.status === 'ok') {
-      //         this.setState({
-      //           ...this.state,
-      //           bookid: res.data.response.booking_id,
-      //           resp: res.data.response,
-      //         });
-
-      //         console.log(this.state);
-      //       }
-      //     })
-      //     .catch(err => console.log(err.response));
-      // }, 1000);
-
-      // axios
-      //   .get(
-      //     `${this.state.settings.base_url}Api/user_registration?firstname=${this.state.firstname}&lastname=${this.state.lastname}&email=${this.state.email}&password=${this.state.pass}&nid=${this.state.nid}&address=${this.state.address}&phone=${this.state.phone}`,
-      //   )
-      //   .then(res => {
-      //     if (res.data.response.status == 'ok') {
-      //       Alert.alert(
-      //         this.state.settings.settings.title,
-      //         res.data.response.message,
-      //         [
-      //           {},
-      //           {},
-      //           {
-      //             text: 'OK',
-      //             onPress: () => this.props.navigation.navigate('login'),
-      //           },
-      //         ],
-      //         {cancelable: false},
-      //       );
-
-      //       this.setState({
-      //         address: '',
-      //         firstname: '',
-      //         lastname: '',
-      //         email: '',
-      //         pass: '',
-      //         confirmP: '',
-      //         nid: '',
-      //       });
-      //     } else {
-      //       Alert.alert(
-      //         this.state.settings.settings.title,
-      //         res.data.response.message,
-      //         [{}, {}, {text: 'OK', onPress: () => console.log('OK Pressed')}],
-      //         {cancelable: false},
-      //       );
-      //     }
-
-      //     // console.log(res.data.response.status)
-      //   })
-      //   .catch(error => console.log(error.response));
+      setTimeout(() => {
+        axios
+          .get(
+            `${this.state.settings.base_url}Api/booking_history?trip_id_no=${this.state.allinfoData.data.data.trip_id_no}&passenger_id=${this.state.userid}&trip_route_id=${this.state.allinfoData.data.data.route}&pickup_location=${this.state.allinfoData.data.pickupData}&drop_location=${this.state.allinfoData.data.dropData}&facilities=${this.state.allinfoData.Fnum}&price=${this.state.allinfoData.total}&adult=${this.state.allinfoData.data.adult}&total_seat=${this.state.allinfoData.seatsize}&seat_number=${this.state.seatNum}&offer_code=${this.state.allinfoData.data.offer}&booking_date=${this.state.allinfoData.data.day}`,
+          )
+          .then(res => {
+            if (res.data.response.status === 'ok') {
+              this.setState({
+                ...this.state,
+                bookid: res.data.response.booking_id,
+                resp: res.data.response,
+              });
+              console.log(res.data.response);
+              this.props.navigation.navigate('pay', {
+                pay: this.state,
+                settings: this.state.settings,
+              });
+            }
+          })
+          .catch(err => console.log(err.response));
+      }, 1000);
     }
   };
 
@@ -225,7 +219,7 @@ export default class Registration extends Component {
               Weka Taarifa
             </Text>
 
-            <View style={styles.inputbox}>
+            <View style={[styles.inputbox, {marginTop: 20}]}>
               <Icon type="FontAwesome" style={styles.fontIcon} name="user" />
               <TextInput
                 style={styles.inpBox}
@@ -500,7 +494,7 @@ const styles = StyleSheet.create({
     marginEnd: 5,
     marginTop: Dimensions.get('window').height <= '600' ? 15 : 20,
     marginBottom: Dimensions.get('window').height <= '600' ? 15 : 20,
-    borderColor: '#003B93',
+    borderColor: '#B21D21',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -63,7 +63,6 @@ export default class SeatPlan extends Component {
       resp: '',
       bookid: '',
       Fnum: [],
-
       seatsize: 0,
       index: 0,
       size: 70,
@@ -112,8 +111,6 @@ export default class SeatPlan extends Component {
 
     let countP = this.props.navigation.state.params.pickup.adult * 1;
     this.setState({seatsize: countP});
-
-    console.log(this.state.userDetails);
   };
 
   _keyExtractor = (item, index) => item.name;
@@ -247,7 +244,7 @@ export default class SeatPlan extends Component {
             style={{
               flexDirection: 'row',
               padding: 10,
-              backgroundColor: '#003B93',
+              backgroundColor: '#B21D21',
             }}>
             <Text
               style={{
@@ -282,7 +279,7 @@ export default class SeatPlan extends Component {
             style={{
               flexDirection: 'row',
               padding: 10,
-              backgroundColor: '#003B93',
+              backgroundColor: '#B21D21',
             }}>
             <Text
               style={{
@@ -317,7 +314,7 @@ export default class SeatPlan extends Component {
             style={{
               flexDirection: 'row',
               padding: 10,
-              backgroundColor: '#003B93',
+              backgroundColor: '#B21D21',
             }}>
             <Text
               style={{
@@ -384,17 +381,22 @@ export default class SeatPlan extends Component {
     const newArr = [];
 
     for (let item of iteml) {
-      newArr.push(item);
+      newArr.push(item[0]);
     }
 
-    this.setState({...this.state, seatNum: JSON.stringify(newArr)});
+    var joined = this.state.seatNum.concat(newArr);
+    this.setState({...this.state, seatNum: joined});
+    // if(this.state.seatNum == []){
+    //   this.setState({seatnum: JSON.stringify(newArr)});
+    // }
 
-    console.log(JSON.stringify(newArr));
+    console.log(this.state.seatNum);
 
     if (newArr.length == this.state.seatsize) {
       this.props.navigation.navigate('registration', {
         userInfo: this.state,
         settings: this.state.settings,
+        seatNum: joined,
       });
     } else {
       Alert.alert(
@@ -568,7 +570,6 @@ export default class SeatPlan extends Component {
                   ]}
                   onPress={() => {
                     this._passDetPage();
-                    console.log(this.state);
                   }}>
                   <View>
                     <Text style={styles.searchtourtext}>

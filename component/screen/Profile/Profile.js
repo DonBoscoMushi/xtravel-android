@@ -65,7 +65,7 @@ export default class Profile extends Component {
     NetInfo.fetch()
       .then(state => {
         if (state.isConnected) {
-          console.log('Mtandao ni ' + state.isConnected);
+          console.log('Network :' + state.isConnected);
           this._callwebSettings();
 
           //get locations and fleet

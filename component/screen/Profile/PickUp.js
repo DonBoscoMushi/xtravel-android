@@ -86,11 +86,11 @@ export default class PickUp extends Component {
       child: '',
       special: '',
       offer: '',
-      // breakfast: false,
-      // wifi: false,
+
       selected: new Map(),
       FasilityNum: [],
     };
+
   }
 
   componentDidMount = () => {
@@ -107,6 +107,7 @@ export default class PickUp extends Component {
           ...this.state,
           seatdataInfo: res.data.response,
         });
+
       })
       .catch(err => console.log(err.response));
   };

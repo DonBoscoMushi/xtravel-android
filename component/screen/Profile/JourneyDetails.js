@@ -21,7 +21,6 @@ export default class JourneyDetails extends Component {
       data: this.props.navigation.state.params.data,
       settings: this.props.navigation.state.params.settings,
       searchdataInfo: '',
-
       index: 0,
       size: 80,
       color: '#324191',
@@ -43,7 +42,6 @@ export default class JourneyDetails extends Component {
           ...this.state,
           searchdataInfo: res.data.response,
         });
-        console.log(res.data.response);
       })
       .catch(err => console.log(err.response));
   };
@@ -64,7 +62,6 @@ export default class JourneyDetails extends Component {
       ava: ava,
       settings: this.state.settings,
     });
-    console.log('Ava' + ava);
   };
 
   _getHeadInfoData = () => {
@@ -291,7 +288,7 @@ export default class JourneyDetails extends Component {
           //     </View>
 
           //     <View style={{flex: 1}}>
-          //       <Text style={[styles.secondTextVal, {color: '#003B93'}]}>
+          //       <Text style={[styles.secondTextVal, {color: '#B21D21'}]}>
           //         {value.fleet_seats + ' ' + this.state.settings.total_seats}
           //       </Text>
           //       <Text
@@ -456,7 +453,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
   },
   searchtour: {
-    backgroundColor: '#003B93',
+    backgroundColor: '#B21D21',
     alignItems: 'center',
     height: 50,
   },

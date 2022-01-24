@@ -31,7 +31,6 @@ export default class SideDrawerPage extends Component {
     setInterval(() => {
       AsyncStorage.getItem('state_data', (error, res) => {
         let d = JSON.parse(res);
-        console.log('data: ' + d);
 
         // AsyncStorage.getItem('user_data', (error, resData) => {
         //   let p = JSON.parse(resData);
@@ -81,7 +80,7 @@ export default class SideDrawerPage extends Component {
             </View>
           </View>
         </View>
-        
+
         <View
           style={{
             backgroundColor: '#fff',
@@ -119,7 +118,7 @@ export default class SideDrawerPage extends Component {
 
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('edit');
+                    // this.props.navigation.navigate('edit');
                     this.props.navigation.closeDrawer();
                   }}
                   style={styles.borderRenderItem}>
@@ -141,7 +140,7 @@ export default class SideDrawerPage extends Component {
 
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('BookingList');
+                    // this.props.navigation.navigate('BookingList');
                     this.props.navigation.closeDrawer();
                   }}
                   style={styles.borderRenderItem}>
@@ -163,7 +162,6 @@ export default class SideDrawerPage extends Component {
 
                 <TouchableOpacity
                   onPress={() => {
-                    this.logOutUser();
                     this.props.navigation.closeDrawer();
                   }}
                   style={styles.borderRenderItem}>
