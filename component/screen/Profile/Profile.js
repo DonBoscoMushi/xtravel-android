@@ -28,6 +28,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Spinner from 'react-native-spinkit';
 import NetInfo from '@react-native-community/netinfo';
 import base_url from '../base_url';
+import logo from '../../assets/logo.png';
 
 const Item = Picker.Item;
 const timeIcon = <MaterialIcons name="schedule" size={25} color="#000" />;
@@ -307,7 +308,7 @@ export default class Profile extends Component {
                     </View>
                   </Left>
 
-                  <Body>
+                  <Body style={{ alignItems: 'center' }}>
                     <View style={styles.logoD}>
                       <Image
                         style={{
@@ -315,7 +316,7 @@ export default class Profile extends Component {
                           height: 90,
                           resizeMode: 'center',
                         }}
-                        source={{uri: this.state.logo}}
+                        source={{uri: image}}
                       />
                     </View>
                   </Body>

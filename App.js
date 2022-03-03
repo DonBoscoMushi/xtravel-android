@@ -122,90 +122,9 @@ const AppdrowerNavigator = createDrawerNavigator(
   },
 );
 
-//bottom navigator
-// const TabNavigator = createMaterialBottomTabNavigator(
-//   {
-//     Home: {
-//       screen: Profile,
-//       navigationOptions: {
-//         tabBarLabel: 'Home',
-//         tabBarIcon: ({}) => (
-//           <View>
-//             <Icon style={[{color: '#ccc'}]} size={25} name={'ios-home'} />
-//           </View>
-//         ),
-//       },
-//     },
-//     Ticket: {
-//       screen: Ticket,
-//       navigationOptions: {
-//         tabBarLabel: 'Ticket',
-//         tabBarIcon: ({}) => (
-//           <View>
-//             <Icon style={[{color: '#ccc'}]} size={25} name={'ios-person'} />
-//           </View>
-//         ),
-//         activeColor: '#880C0C',
-//         inactiveColor: '#818181',
-//         barStyle: {backgroundColor: '#FFFFFF'},
-//       },
-//     },
-//     Taarifa: {
-//       screen: BookingList,
-//       navigationOptions: {
-//         tabBarLabel: 'Taarifa'(
-//           <View>
-//             <Icon style={[{color: '#ccc'}]} size={25} name={'ios-images'} />
-//           </View>
-//         ),
-//         activeColor: '#880C0C',
-//         inactiveColor: '#818181',
-//         barStyle: {backgroundColor: '#FFFFFF'},
-//       },
-//     },
-//     Registration: {
-//       screen: Registration,
-//       navigationOptions: {
-//         tabBarLabel: 'Offer',
-//         tabBarIcon: ({}) => (
-//           <View>
-//             <Icon style={[{color: '#ccc'}]} size={25} name={'ios-cart'} />
-//           </View>
-//         ),
-//         activeColor: '#880C0C',
-//         inactiveColor: '#818181',
-//         barStyle: {backgroundColor: '#FFFFFF'},
-//       },
-//     },
-//   },
-//   {
-//     initialRouteName: 'Home',
-//     activeColor: '#880C0C',
-//     inactiveColor: '#818181',
-//     barStyle: {backgroundColor: '#FFFFFF'},
-//   },
-// );
-
-// class Ticket extends React.Component {
-//   render() {
-//       return (
-//           <View style={styles.container}>
-//               <Text>Tickets</Text>
-//           </View>
-//       );
-//   }
-// }
-// const styles = StyleSheet.create({
-//   container: {
-//       flex: 1,
-//       justifyContent: 'center',
-//       alignItems: 'center'
-//   },
-// });
-
 const AppSwitchNavigator = createSwitchNavigator({
-  // login: {
-  //   screen: Login,
+  // bottomnsv: {
+  //   screen: BottomTabNavigator,
   // },
   // registration: {
   //   screen: Registration,
@@ -219,6 +138,9 @@ const AppContainer = createAppContainer(AppSwitchNavigator);
 
 export default class componentName extends Component {
   render() {
-    return <AppContainer />;
+    return <AppContainer >
+      
+    </AppContainer>
+      ;
   }
 }

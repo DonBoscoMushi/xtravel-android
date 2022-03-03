@@ -6,10 +6,10 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  Alert,
+  Alert, 
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Thumbnail, Icon} from 'native-base';
+import {Thumbnail, Icon} from 'native-base'
 import IconS from 'react-native-vector-icons/FontAwesome5';
 export default class SideDrawerPage extends Component {
   _isMounted = false;
@@ -27,7 +27,7 @@ export default class SideDrawerPage extends Component {
 
   componentDidMount = () => {
     this._isMounted = true;
-
+    
     setInterval(() => {
       AsyncStorage.getItem('state_data', (error, res) => {
         let d = JSON.parse(res);
