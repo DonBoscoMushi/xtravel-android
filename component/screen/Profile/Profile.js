@@ -35,6 +35,7 @@ const timeIcon = <MaterialIcons name="schedule" size={25} color="#000" />;
 const locationIcon = <MaterialIcons name="place" size={25} color="#000" />;
 const searchIcon = <MaterialIcons name="search" size={20} color="#fff" />;
 const image = {uri: '../../assets/bg-img.png'};
+const logo_image = {uri: '../../assets/xtravel_logo.png'};
 
 export default class Profile extends Component {
   _isMounted = false;
@@ -308,29 +309,29 @@ export default class Profile extends Component {
                     </View>
                   </Left>
 
-                  <Body style={{ alignItems: 'center' }}>
+                  <Body>
                     <View style={styles.logoD}>
                       <Image
                         style={{
-                          width: 138,
-                          height: 90,
+                          width: 150,
+                          height: 50,
                           resizeMode: 'center',
                         }}
-                        source={{uri: image}}
+                        source={require('../../assets/xtravel_logo.png')}
                       />
                     </View>
                   </Body>
 
                   <Right style={(styles.marginLeft = 2)}>
                     <View style={{flexDirection: 'row'}}>
-                      <TouchableOpacity
+                      {/* <TouchableOpacity
                         onPress={() => this.props.navigation.openDrawer()}>
                         <Icon
                           style={{fontSize: 22}}
                           type="FontAwesome"
                           name="mobile-phone"
                         />
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
 
                       <TouchableOpacity
                         onPress={() => this.props.navigation.openDrawer()}>
@@ -618,7 +619,7 @@ const styles = StyleSheet.create({
   loginHeader: {
     backgroundColor: '#ffffff',
     borderBottomColor: '#333',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     elevation: 1,
     shadowOpacity: 2,
   },
@@ -627,6 +628,8 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   logoD: {
+    marginTop: 5,
+    marginBottom: 5,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'baseline',

@@ -120,7 +120,7 @@ export default class JourneyDetails extends Component {
                 />
                 <View style={{flex: 1, marginStart: 3}}>
                   <Text style={[styles.text_start, {marginTop: 5}]}>
-                    xTravel
+                    Xtravel
                   </Text>
                   <Text style={styles.trip_txt}>
                     {value.pickup_trip_location}
@@ -169,10 +169,10 @@ export default class JourneyDetails extends Component {
                   alignContent: 'center',
                   justifyContent: 'center',
                 }}>
-                <View style={[styles.btns, {marginEnd: 10}]}>
+                <View style={styles.btns}>
                   <Text style={[styles.btnsText]}>Taarifa za Basi</Text>
                 </View>
-                <View style={[styles.btns, {marginStart: 10}]}>
+                <View style={styles.btns}>
                   <TouchableOpacity
                     onPress={() =>
                       this._seatplan(
@@ -181,161 +181,15 @@ export default class JourneyDetails extends Component {
                       )
                     }>
                     <Text style={[styles.btnsText]}>
-                      {this.state.settings.book.toUpperCase()}
+                      {/* {this.state.settings.book.toUpperCase()} */}
+                      Kata Tiketi
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
           </View>
-
-          // <View style={styles.AllDataVal} key={value.trip_id_no}>
-          //   <View style={styles.departureView}>
-          //     <View style={styles.depCont}>
-          //       <Text style={styles.depText}>
-          //         {this.state.settings.departure}
-          //       </Text>
-          //     </View>
-
-          //     <View style={{flex: 1}}>
-          //       <Text style={styles.firstTextVal}>{value.start}</Text>
-          //       <Text style={styles.secondTextVal}>
-          //         {value.pickup_trip_location}
-          //       </Text>
-          //     </View>
-          //   </View>
-
-          //   <View style={styles.departureView}>
-          //     <View style={styles.depCont}>
-          //       <Text style={styles.depText}>
-          //         {this.state.settings.duration}
-          //       </Text>
-          //     </View>
-
-          //     <View style={{flex: 1}}>
-          //       <Text style={styles.firstTextVal}>{value.duration}</Text>
-          //     </View>
-          //   </View>
-
-          //   <View style={styles.departureView}>
-          //     <View style={styles.depCont}>
-          //       <Text style={styles.depText}>
-          //         {this.state.settings.distance}
-          //       </Text>
-          //     </View>
-
-          //     <View style={{flex: 1}}>
-          //       <Text style={styles.firstTextVal}>{value.distance}</Text>
-          //     </View>
-          //   </View>
-
-          //   <View style={styles.departureView}>
-          //     <View style={styles.depCont}>
-          //       <Text style={styles.depText}>
-          //         {this.state.settings.arrival}
-          //       </Text>
-          //     </View>
-
-          //     <View style={{flex: 1}}>
-          //       <Text style={styles.firstTextVal}>{value.end}</Text>
-          //       <Text style={styles.secondTextVal}>
-          //         {value.drop_trip_location}
-          //       </Text>
-          //     </View>
-          //   </View>
-
-          //   <View style={styles.departureView}>
-          //     <View style={styles.depCont}>
-          //       <Text style={styles.depText}>
-          //         {this.state.settings.adult_fare}
-          //       </Text>
-          //     </View>
-
-          //     <View style={{flex: 1}}>
-          //       <Text style={styles.firstTextVal}>{value.price}</Text>
-          //     </View>
-          //   </View>
-
-          //   <View style={styles.departureView}>
-          //     <View style={styles.depCont}>
-          //       <Text style={styles.depText}>
-          //         {this.state.settings.child_fare}
-          //       </Text>
-          //     </View>
-
-          //     <View style={{flex: 1}}>
-          //       <Text style={styles.firstTextVal}>{value.children_price}</Text>
-          //     </View>
-          //   </View>
-
-          //   <View style={styles.departureView}>
-          //     <View style={styles.depCont}>
-          //       <Text style={styles.depText}>
-          //         {this.state.settings.special_fare}
-          //       </Text>
-          //     </View>
-
-          //     <View style={{flex: 1}}>
-          //       <Text style={styles.firstTextVal}>{value.special_price}</Text>
-          //     </View>
-          //   </View>
-
-          //   <View style={{flexDirection: 'row', backgroundColor: '#ffffff'}}>
-          //     <View style={styles.depCont}>
-          //       <Text style={styles.depText}>
-          //         {this.state.settings.seat_details}
-          //       </Text>
-          //     </View>
-
-          //     <View style={{flex: 1}}>
-          //       <Text style={[styles.secondTextVal, {color: '#B21D21'}]}>
-          //         {value.fleet_seats + ' ' + this.state.settings.total_seats}
-          //       </Text>
-          //       <Text
-          //         style={[
-          //           styles.secondTextVal,
-          //           {
-          //             color:
-          //               this.state.searchdataInfo.available[i] > 5
-          //                 ? 'green'
-          //                 : 'red',
-          //           },
-          //         ]}>
-          //         {this.state.searchdataInfo.available[i] +
-          //           ' ' +
-          //           this.state.settings.seats_available}{' '}
-          //       </Text>
-          //     </View>
-          //   </View>
-
-          //   <View
-          //     style={{
-          //       backgroundColor: '#ffffff',
-          //       borderTopWidth: 2,
-          //       borderTopColor: '#e3e3e3',
-          //     }}>
-          //     <View
-          //       style={{
-          //         flex: 1,
-          //         justifyContent: 'center',
-          //         alignItems: 'center',
-          //       }}>
-          //       <TouchableOpacity
-          //         onPress={() =>
-          //           this._seatplan(
-          //             value,
-          //             this.state.searchdataInfo.available[i],
-          //           )
-          //         }>
-          //         <Text style={styles.bookbtn}>
-          //           {this.state.settings.book.toUpperCase()}
-          //         </Text>
-          //       </TouchableOpacity>
-          //     </View>
-          //   </View>
-          // </View>
         );
-        // })
       });
 
       return d;
@@ -344,13 +198,21 @@ export default class JourneyDetails extends Component {
 
   render() {
     return (
-      <Container style={{backgroundColor: '#E2DFDF', overflow: 'hidden'}}>
+      <Container
+        style={{
+          backgroundColor: '#E2DFDF',
+          overflow: 'hidden',
+        }}>
         <Header style={styles.loginHeader}>
           <Body>
             <View style={styles.logoD}>
               <Image
-                style={{width: 140, height: 30, resizeMode: 'contain'}}
-                source={{uri: this.state.data.logo}}
+                style={{
+                  width: 150,
+                  height: 50,
+                  resizeMode: 'center',
+                }}
+                source={require('../../assets/xtravel_logo.png')}
               />
             </View>
           </Body>
@@ -396,8 +258,10 @@ const styles = StyleSheet.create({
   },
 
   btns: {
-    width: 110,
+    minWidth: '48%',
+    textAlign: 'center',
     borderRadius: 30,
+    margin: 2,
     marginTop: 5,
     opacity: 1,
     justifyContent: 'center',
@@ -414,6 +278,7 @@ const styles = StyleSheet.create({
 
   text_start: {
     textAlign: 'left',
+    fontWeight: 'bold',
     paddingStart: 5,
   },
   trip_txt: {
@@ -434,9 +299,11 @@ const styles = StyleSheet.create({
   loginHeader: {
     backgroundColor: '#ffffff',
     borderBottomColor: '#333',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
   },
   logoD: {
+    marginTop: 5,
+    marginBottom: 5,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',

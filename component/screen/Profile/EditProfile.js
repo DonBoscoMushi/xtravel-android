@@ -416,8 +416,12 @@ export default class EditProfile extends Component {
             <Body>
               <View style={styles.logoD}>
                 <Image
-                  style={{width: 140, height: 30}}
-                  source={{uri: this.state.logo}}
+                  style={{
+                    width: 150,
+                    height: 50,
+                    resizeMode: 'center',
+                  }}
+                  source={require('../../assets/xtravel_logo.png')}
                 />
               </View>
             </Body>
@@ -446,9 +450,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
   },
   logoD: {
+    marginTop: 5,
+    marginBottom: 5,
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'baseline',
   },
   logoImage: {
     resizeMode: 'contain',

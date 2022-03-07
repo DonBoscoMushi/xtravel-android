@@ -11,6 +11,15 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+
+        TypeWriter tw = findViewById(R.id.slogan);
+
+
+        tw.setText("");
+        tw.setCharacterDelay(150);
+        tw.animateText("Travel with xtravel...");
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

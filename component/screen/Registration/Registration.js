@@ -8,6 +8,7 @@ import {
   Dimensions,
   Keyboard,
   Alert,
+  Animated,
 } from 'react-native';
 import {
   Container,
@@ -45,6 +46,8 @@ export default class Registration extends Component {
       logo: this.props.navigation.state.params.logo,
       settings: this.props.navigation.state.params.settings,
       userid: DeviceInfo.getUniqueId(),
+      animated: new Animated.Value(0),
+      opacityA: new Animated.Value(1),
     };
   }
 
@@ -169,7 +172,27 @@ export default class Registration extends Component {
     }
   };
 
+  componentDidMount() {
+    const {animated, opacityA} = this.state;
+
+    Animated.loop(
+      Animated.parallel([
+        Animated.timing(animated, {
+          toValue: 1,
+          useNativeDriver: false,
+          duration: 1000,
+        }),
+        Animated.timing(opacityA, {
+          toValue: 0,
+          useNativeDriver: false,
+          duration: 1000,
+        }),
+      ]),
+    ).start();
+  }
+
   render() {
+    const {animated, opacityA} = this.state;
     return (
       <Container style={{backgroundColor: '#cecece'}}>
         <Header style={styles.loginHeader}>
@@ -313,111 +336,41 @@ export default class Registration extends Component {
             />
           </View> */}
 
-          <View style={{width: '94%', marginLeft: '3%', marginTop: 15}}>
-            {/* <View style={styles.inputbox}>
-              <Icon type="FontAwesome" style={styles.fontIcon} name="user" />
-              <TextInput
-                style={styles.inpBox}
-                onChangeText={firstname => this.setState({firstname})}
-                // autoCapitalize="none"
-                placeholder={this.state.settings.first_name + ' *'}
-                value={this.state.firstname}
-              />
-            </View>
-
-            <View style={styles.inputbox}>
-              <Icon type="FontAwesome" style={styles.fontIcon} name="user" />
-              <TextInput
-                style={styles.inpBox}
-                onChangeText={lastname => this.setState({lastname})}
-                // autoCapitalize="none"
-                placeholder={this.state.settings.last_name + ' *'}
-                value={this.state.lastname}
-              />
-            </View>
-
-            <View style={styles.inputbox}>
-              <Icon
-                type="FontAwesome"
-                style={styles.fontIcon}
-                name="envelope"
-              />
-              <TextInput
-                style={styles.inpBox}
-                onChangeText={email => this.setState({email})}
-                autoCapitalize="none"
-                placeholder={this.state.settings.email + ' *'}
-                value={this.state.email}
-              />
-            </View>
-
-            <View style={styles.inputbox}>
-              <Icon
-                type="FontAwesome"
-                style={styles.fontIcon}
-                name="address-card"
-              />
-              <TextInput
-                style={styles.inpBox}
-                onChangeText={address => this.setState({address})}
-                // autoCapitalize="none"
-                autoCorrect={false}
-                placeholder={this.state.settings.address}
-                value={this.state.address}
-              />
-            </View>
-
-            <View style={styles.inputbox}>
-              <Icon type="FontAwesome" style={styles.fontIcon} name="phone" />
-              <TextInput
-                style={styles.inpBox}
-                onChangeText={phone => this.setState({phone})}
-                // autoCapitalize="none"
-                keyboardType="numeric"
-                placeholder={this.state.settings.phone}
-                value={this.state.phone}
-              />
-            </View>
-
-            <View style={styles.inputbox}>
-              <Icon type="FontAwesome" style={styles.lockicon} name="book" />
-              <TextInput
-                style={styles.inpBox}
-                keyboardType="numeric"
-                onChangeText={nid => this.setState({nid})}
-                autoCapitalize="none"
-                placeholder="NID"
-                value={this.state.nid}
-              />
-            </View>
-
-            <View style={styles.inputbox}>
-              <Icon type="FontAwesome" style={styles.lockicon} name="lock" />
-              <TextInput
-                style={styles.inpBox}
-                onChangeText={pass => this.setState({pass})}
-                secureTextEntry={true}
-                autoCapitalize="none"
-                placeholder={this.state.settings.password + ' *'}
-                value={this.state.pass}
-              />
-            </View>
-
-            <View style={styles.inputbox}>
-              <Icon type="FontAwesome" style={styles.lockicon} name="lock" />
-              <TextInput
-                style={styles.inpBox}
-                onChangeText={confirmP => this.setState({confirmP})}
-                secureTextEntry={true}
-                autoCapitalize="none"
-                placeholder={this.state.settings.confirm_password + ' *'}
-                value={this.state.confirmP}
-              />
-            </View> */}
-
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '94%',
+              marginLeft: '3%',
+              marginTop: 15,
+            }}>
+            <Animated.View
+              style={{
+                width: '45%',
+                height: 50,
+                borderRadius: 50,
+                backgroundColor: '#D21B21',
+                opacity: opacityA,
+                transform: [
+                  {
+                    scale: animated,
+                  },
+                ],
+              }}></Animated.View>
             <TouchableOpacity
               onPress={() => this._regBus365()}
-              style={styles.regbtn}>
+              style={{
+                width: '45%',
+                height: 50,
+                borderRadius: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#D21B21AD',
+                alignSelf: 'center',
+                position: 'absolute',
+              }}>
               <Text style={styles.regtext}>Lipia</Text>
             </TouchableOpacity>
           </View>
@@ -510,7 +463,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   regtext: {
-    color: '#ffffff',
+    color: '#FFF',
     fontSize: 16,
     paddingVertical: 8,
     fontFamily: 'Montserrat-SemiBold',
